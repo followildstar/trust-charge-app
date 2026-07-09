@@ -1,0 +1,833 @@
+/* ─── Trust Charge - Global CSS (Tailwind → Pure CSS) ─────────────────────────
+   Color system, typography, layout utilities, and component styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FONTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Colors */
+  --background: #FAF8F4;
+  --foreground: #2C2824;
+  --card: #FFFFFF;
+  --card-foreground: #2C2824;
+  --primary: #C4877D;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EDE8F5;
+  --secondary-foreground: #3D3650;
+  --muted: #F4EFE6;
+  --muted-foreground: #8A7E74;
+  --accent: #D8C8E8;
+  --accent-foreground: #3D3650;
+  --destructive: #C4525A;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(44, 40, 36, 0.1);
+  --input-background: #F4EFE6;
+  
+  /* Charts */
+  --chart-1: #C4877D;
+  --chart-2: #C4A8D4;
+  --chart-3: #94B8D4;
+  --chart-4: #D4B896;
+  --chart-5: #B4C4B4;
+  
+  /* Dimensions */
+  --radius: 1rem;
+  --font-size: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  color: var(--foreground);
+  background-color: var(--background);
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Montserrat Titles ── */
+.tc-app-title {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.tc-screen-title {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.tc-gauge-number {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tc-stat-value {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.tc-card-value {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.875rem;
+  line-height: 1.15;
+}
+
+.tc-score-display {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.tc-month-title {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.tc-timeline-score {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.2;
+}
+
+.tc-phase-hero-name {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.625rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.tc-phase-dday {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1;
+}
+
+.tc-phase-card-name {
+  font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* ── Roboto / Noto Body ── */
+
+.tc-gauge-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tc-section-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.625rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tc-stat-sublabel {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.tc-habit-name {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-habit-pts {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-habit-option {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-day-header {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.tc-day-number {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.tc-day-number--today {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.tc-legend-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.tc-detail-date {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-detail-sub {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-tab-btn {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-card-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-card-sub {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.tc-chart-title {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-chart-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-timeline-date {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-timeline-sub {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-timeline-item {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-empty-msg {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.tc-empty-sub {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-modal-title {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.tc-modal-confirm-title {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.tc-modal-body {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.tc-form-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tc-input {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-settings-name {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-settings-pts {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-field-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-btn {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 200ms ease;
+}
+
+.tc-btn-add {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.tc-nav-label {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.625rem;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+}
+
+.tc-date-sub {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.tc-banner-text {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.tc-period-counter {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  font-size: 0.625rem;
+  line-height: 1.3;
+}
+
+.tc-phase-goal {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.tc-priority-chip {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.tc-phase-badge {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+}
+
+.tc-phase-section {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tc-phase-indicator {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LAYOUT & FLEX
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.flex { display: flex; }
+.flex-1 { flex: 1 1 0%; }
+.flex-shrink-0 { flex-shrink: 0; }
+.flex-col { flex-direction: column; }
+
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.gap-0\.5 { gap: 0.125rem; }
+.gap-1 { gap: 0.25rem; }
+.gap-1\.5 { gap: 0.375rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-5 { gap: 1.25rem; }
+.gap-6 { gap: 1.5rem; }
+
+.space-y-1 > * + * { margin-top: 0.25rem; }
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-3 > * + * { margin-top: 0.75rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+.space-x-2 > * + * { margin-left: 0.5rem; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIZING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.w-full { width: 100%; }
+.w-px { width: 1px; }
+.w-1 { width: 0.25rem; }
+.w-1\.5 { width: 0.375rem; }
+.w-2 { width: 0.5rem; }
+.w-3 { width: 0.75rem; }
+.w-4 { width: 1rem; }
+.w-6 { width: 1.5rem; }
+.w-7 { width: 1.75rem; }
+.w-8 { width: 2rem; }
+.w-10 { width: 2.5rem; }
+.w-14 { width: 3.5rem; }
+.w-20 { width: 5rem; }
+
+.h-1 { height: 0.25rem; }
+.h-1\.5 { height: 0.375rem; }
+.h-2 { height: 0.5rem; }
+.h-3 { height: 0.75rem; }
+.h-4 { height: 1rem; }
+.h-6 { height: 1.5rem; }
+.h-7 { height: 1.75rem; }
+.h-8 { height: 2rem; }
+.h-10 { height: 2.5rem; }
+
+.min-w-0 { min-width: 0; }
+.min-h-0 { min-height: 0; }
+.min-h-screen { min-height: 100vh; }
+
+.max-w-md { max-width: 28rem; }
+.max-w-sm { max-width: 24rem; }
+.max-h-\[85vh\] { max-height: 85vh; }
+
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SPACING (Padding, Margin)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.p-1 { padding: 0.25rem; }
+.p-1\.5 { padding: 0.375rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-5 { padding: 1.25rem; }
+.p-6 { padding: 1.5rem; }
+
+.px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+.px-1\.5 { padding-left: 0.375rem; padding-right: 0.375rem; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-3\.5 { padding-left: 0.875rem; padding-right: 0.875rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+
+.pt-2 { padding-top: 0.5rem; }
+.pt-4 { padding-top: 1rem; }
+.pt-10 { padding-top: 2.5rem; }
+
+.pb-4 { padding-bottom: 1rem; }
+.pb-6 { padding-bottom: 1.5rem; }
+
+.m-0 { margin: 0; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-2\.5 { margin-bottom: 0.625rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-5 { margin-bottom: 1.25rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-5 { margin-top: 1.25rem; }
+.mt-6 { margin-top: 1.5rem; }
+
+.ml-1 { margin-left: 0.25rem; }
+.ml-2 { margin-left: 0.5rem; }
+
+.mr-1 { margin-right: 0.25rem; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BORDERS & RADIUS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.border { border: 1px solid var(--border); }
+.border-t { border-top: 1px solid var(--border); }
+.border-b { border-bottom: 1px solid var(--border); }
+.border-r { border-right: 1px solid var(--border); }
+.border-l { border-left: 1px solid var(--border); }
+.border-dashed { border-style: dashed; }
+
+.rounded-full { border-radius: 9999px; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-3xl { border-radius: 1.5rem; }
+
+.ring-1 { outline: 1px solid var(--ring); outline-offset: 1px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COLORS (Background & Text)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.bg-background { background-color: var(--background); }
+.bg-card { background-color: var(--card); }
+.bg-muted { background-color: var(--muted); }
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--secondary); }
+.bg-accent { background-color: var(--accent); }
+.bg-destructive { background-color: var(--destructive); }
+.bg-foreground\/20 { background-color: rgba(44, 40, 36, 0.2); }
+.bg-foreground\/30 { background-color: rgba(44, 40, 36, 0.3); }
+.bg-secondary\/30 { background-color: rgba(237, 232, 245, 0.3); }
+.bg-secondary\/50 { background-color: rgba(237, 232, 245, 0.5); }
+.bg-muted\/40 { background-color: rgba(244, 239, 230, 0.4); }
+.bg-muted\/60 { background-color: rgba(244, 239, 230, 0.6); }
+.bg-muted\/70 { background-color: rgba(244, 239, 230, 0.7); }
+.bg-background\/95 { background-color: rgba(250, 248, 244, 0.95); }
+.bg-background\/70 { background-color: rgba(250, 248, 244, 0.7); }
+.bg-destructive\/8 { background-color: rgba(196, 82, 90, 0.08); }
+.bg-destructive\/12 { background-color: rgba(196, 82, 90, 0.12); }
+
+.text-foreground { color: var(--foreground); }
+.text-muted-foreground { color: var(--muted-foreground); }
+.text-primary { color: var(--primary); }
+.text-secondary-foreground { color: var(--secondary-foreground); }
+.text-accent-foreground { color: var(--accent-foreground); }
+.text-destructive { color: var(--destructive); }
+.text-destructive-foreground { color: var(--destructive-foreground); }
+.text-card { color: var(--card); }
+.text-primary-foreground { color: var(--primary-foreground); }
+.text-white { color: #FFFFFF; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   POSITIONING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+.top-1\/2 { top: 50%; }
+.left-1\/2 { left: 50%; }
+.right-1\.5 { right: 0.375rem; }
+
+.-translate-y-1\/2 { transform: translateY(-50%); }
+
+.z-50 { z-index: 50; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TRANSITIONS & EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.transition-all { transition: all 150ms ease; }
+.transition-colors { transition: color, background-color 150ms ease; }
+.transition-opacity { transition: opacity 150ms ease; }
+
+.opacity-20 { opacity: 0.2; }
+.opacity-40 { opacity: 0.4; }
+.opacity-50 { opacity: 0.5; }
+.opacity-60 { opacity: 0.6; }
+
+.backdrop-blur-sm { backdrop-filter: blur(4px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHADOWS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+.shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+.shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+
+.pointer-events-none { pointer-events: none; }
+
+.appearance-none { appearance: none; }
+
+.outline-none { outline: none; }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOVER & FOCUS STATES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+button:hover {
+  opacity: 0.9;
+}
+
+select:focus,
+input:focus {
+  border-color: rgba(196, 135, 125, 0.3);
+  outline: none;
+}
+
+.hover\:border-border:hover {
+  border-color: var(--border);
+}
+
+.hover\:text-foreground:hover {
+  color: var(--foreground);
+}
+
+.hover\:text-destructive:hover {
+  color: var(--destructive);
+}
+
+.hover\:text-primary-foreground:hover {
+  color: var(--primary-foreground);
+}
+
+.hover\:bg-muted\/40:hover {
+  background-color: rgba(244, 239, 230, 0.4);
+}
+
+.hover\:bg-muted\/60:hover {
+  background-color: rgba(244, 239, 230, 0.6);
+}
+
+.hover\:bg-muted\/70:hover {
+  background-color: rgba(244, 239, 230, 0.7);
+}
+
+.focus\:border-primary\/30:focus {
+  border-color: rgba(196, 135, 125, 0.3);
+}
+
+.focus\:bg-muted:focus {
+  background-color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background-color: var(--input-background);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: border-color 200ms ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(196, 135, 125, 0.3);
+}
+
+select {
+  appearance: none;
+  padding-right: 2.5rem;
+}
+
+input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 1;
+}
+
+input:disabled {
+  background-color: var(--muted);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+  opacity: 0.8;
+}
