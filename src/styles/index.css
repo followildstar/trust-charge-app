@@ -1,4 +1,2 @@
-@import './fonts.css';
-@import './typography.css';
-@import './tailwind.css';
-@import './theme.css';
+/* All styles are consolidated in globals.css */
+@import "./globals.css";
