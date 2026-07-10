@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { makeId } from "../lib/calc";
+import { NumberInput } from "./NumberInput";
 import type { Habit, HabitOption } from "../types";
 
 export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>; onSave: (h: Habit) => void; onClose: () => void; }) {
@@ -33,7 +34,7 @@ export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>;
           </div>
           <div>
             <div className="field-label">점수</div>
-            <input type="number" min={1} max={20} className="field-input" value={score} onChange={e => setScore(Number(e.target.value))} />
+            <NumberInput min={1} max={20} className="field-input" value={score} onChange={setScore} />
           </div>
           <div className="row-between-py1">
             <span className="field-label-fg-plain">보너스 항목</span>
