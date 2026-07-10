@@ -16,7 +16,7 @@ export function PhaseHeroCard({
   const statusBg = status === "active" ? "badge-active" : status === "upcoming" ? "badge-upcoming" : "badge-done";
 
   return (
-    <button className="phase-hero" onClick={onOpenDetail} style={{ background: "linear-gradient(135deg, #F9EDE8 0%, #EDE8F5 100%)" }}>
+    <button className="phase-hero" onClick={onOpenDetail}>
       <div className="phase-hero-body">
         <div className="row-between-mb4">
           <span className={`phase-badge ${statusBg}`}>{statusLabel}</span>
