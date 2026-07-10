@@ -93,7 +93,7 @@ export function PhaseDetailScreen({
 
       <div className="screen-body-stack6">
         {/* Phase summary card */}
-        <div className="summary-card" style={{ background: "linear-gradient(135deg, #F9EDE8 0%, #EDE8F5 100%)" }}>
+        <div className="summary-card">
           <div className="summary-goal">{phase.mainGoal}</div>
           {phase.priority.length > 0 && (
             <div className="chip-row-mb3">
