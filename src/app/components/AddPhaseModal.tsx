@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { makeId } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
+import { NumberInput } from "./NumberInput";
 import type { Phase } from "../types";
 
 export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => void; onClose: () => void; }) {
@@ -64,7 +65,7 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
           </div>
           <div>
             <div className="field-label">기본 자기신뢰도 (%)</div>
-            <input type="number" min={0} max={99} className="field-input" value={baseScore} onChange={e => setBaseScore(Number(e.target.value))} />
+            <NumberInput min={0} max={99} className="field-input" value={baseScore} onChange={setBaseScore} />
           </div>
         </div>
         <div className="modal-actions">
