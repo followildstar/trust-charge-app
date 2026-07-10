@@ -4,6 +4,7 @@ import { ArrowLeft, ChevronRight, Edit2, ExternalLink, Info, Link2, Plus, Settin
 import { AddLinkModal } from "../components/AddLinkModal";
 import { AddPhaseModal } from "../components/AddPhaseModal";
 import { HabitEditor } from "../components/HabitEditor";
+import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
 import { getDday, getPhaseStatus } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
@@ -149,7 +150,7 @@ export function PhaseDetailScreen({
               </div>
               <div>
                 <div className="field-label-mb1">기본 자기신뢰도 (%)</div>
-                <input type="number" min={0} max={99} className="field-input-compact" value={baseScore} onChange={e => setBaseScore(Number(e.target.value))} />
+                <NumberInput min={0} max={99} className="field-input-compact" value={baseScore} onChange={setBaseScore} />
               </div>
               <button onClick={saveMeta} className="btn-primary-full-sm">저장</button>
             </div>
