@@ -4,15 +4,16 @@ import { ChevronRight, ExternalLink } from "lucide-react";
 import { CircularGauge } from "../components/CircularGauge";
 import { HabitCard } from "../components/HabitCard";
 import { SectionLabel } from "../components/SectionLabel";
-import { calcScore, calcTotalProgress, getPhaseStatus, toKoDateStr } from "../lib/calc";
+import { calcScore, calcTotalProgress, getPhaseStatus, isDateInRange, toKoDateStr } from "../lib/calc";
 import type { Action, AppState } from "../types";
 
 export function HomeScreen({
-  state, dispatch, onGoPhases,
+  state, dispatch, onGoPhases, onToast,
 }: {
   state: AppState;
   dispatch: React.Dispatch<Action>;
   onGoPhases: () => void;
+  onToast: (msg: string) => void;
 }) {
   const today = format(new Date(), "yyyy-MM-dd");
   const activePhase = state.phases.find(p => p.id === state.activePhaseId)!;
@@ -28,6 +29,26 @@ export function HomeScreen({
   const bonusHabits = activePhase.habits.filter(h => h.enabled && h.isBonus).sort((a, b) => a.order - b.order);
   const allBasicChecked = basicHabits.length > 0 && basicHabits.every(h => dayRec[h.id]?.checked);
   const phaseStatus = getPhaseStatus(activePhase);
+
+  // 오늘이 목표 기간에 포함될 때만 체크 가능
+  const canCheck = isDateInRange(today, activePhase.startDate, activePhase.endDate);
+
+  function handleToggle(habitId: string) {
+    if (!canCheck) {
+      onToast(
+        phaseStatus === "upcoming"
+          ? "아직 시작 전이에요. 시작일부터 체크할 수 있어요"
+          : "실천 기간이 지났어요. 캘린더에서 지난 기록을 확인해요"
+      );
+      return;
+    }
+    dispatch({ type: "TOGGLE_CHECK", date: today, habitId });
+  }
+
+  function handleSetOption(habitId: string, optId: string) {
+    if (!canCheck) return;
+    dispatch({ type: "SET_OPTION", date: today, habitId, optionId: optId });
+  }
 
   return (
     <div className="screen">
@@ -84,8 +105,8 @@ export function HomeScreen({
               {basicHabits.map(h => (
                 <HabitCard key={h.id} habit={h}
                   record={dayRec[h.id] || { checked: false, selectedOptionId: "" }}
-                  onToggle={() => dispatch({ type: "TOGGLE_CHECK", date: today, habitId: h.id })}
-                  onSetOption={optId => dispatch({ type: "SET_OPTION", date: today, habitId: h.id, optionId: optId })}
+                  onToggle={() => handleToggle(h.id)}
+                  onSetOption={optId => handleSetOption(h.id, optId)}
                 />
               ))}
             </div>
@@ -99,8 +120,8 @@ export function HomeScreen({
               {bonusHabits.map(h => (
                 <HabitCard key={h.id} habit={h}
                   record={dayRec[h.id] || { checked: false, selectedOptionId: "" }}
-                  onToggle={() => dispatch({ type: "TOGGLE_CHECK", date: today, habitId: h.id })}
-                  onSetOption={optId => dispatch({ type: "SET_OPTION", date: today, habitId: h.id, optionId: optId })}
+                  onToggle={() => handleToggle(h.id)}
+                  onSetOption={optId => handleSetOption(h.id, optId)}
                 />
               ))}
             </div>
