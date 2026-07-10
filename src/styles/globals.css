@@ -1,40 +1,46 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    TRUST CHARGE — globals.css
-   Yeobaek Design System v1.0 기반 · Notion 레이아웃 감각 (넉넉한 여백, 얇은 보더)
-   게이지 컬러/애니메이션은 유지
+   GitHub 웹사이트 디자인 언어 기반 (흰 배경, #ddd 보더, 각진 카드, 여백 넉넉)
+   메인 컬러 #2e6130 (녹색) · 게이지 컬러/애니메이션은 유지
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Pretendard (한글 최적화) + 게이지 숫자용 Montserrat */
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap");
 
-/* ─── Design Tokens (Yeobaek v1.0) ────────────────────────────────────────── */
+/* ─── Design Tokens (GitHub 스타일) ────────────────────────────────────────── */
 :root {
   /* Colors */
-  --background: #faf9f7;      /* Yeobaek Background */
-  --foreground: #222222;      /* Yeobaek Text */
-  --card: #ffffff;            /* Yeobaek Surface */
-  --card-foreground: #222222;
-  --primary: #222222;         /* Yeobaek Primary = Black */
+  --background: #ffffff; /* 흰 배경 */
+  --foreground: #1f2328; /* GitHub 본문 텍스트 */
+  --card: #f8f8f8; /* 카드도 흰 배경 (보더로 구분) */
+  --card-foreground: #1f2328;
+  --primary: #222; /* 메인 녹색 */
+  --primary-hover: #444;
   --primary-foreground: #ffffff;
-  --secondary: #f2f0ec;       /* 연한 surface (선택/강조 배경) */
-  --secondary-foreground: #222222;
-  --muted: #f2f0ec;           /* 게이지 트랙·입력 배경 */
-  --muted-foreground: #7a7a7a; /* Yeobaek Secondary text */
-  --accent: #eceae4;
-  --accent-foreground: #222222;
-  --destructive: #c4525a;
+  --secondary: #f6f8fa; /* GitHub 연회색 surface */
+  --secondary-foreground: #1f2328;
+  --muted: #f6f8fa; /* 게이지 트랙·입력 배경 */
+  --muted-foreground: #59636e; /* GitHub 보조 텍스트 */
+  --accent: #f6f8fa;
+  --accent-foreground: #1f2328;
+  --destructive: #cf222e; /* GitHub danger red */
   --destructive-foreground: #ffffff;
-  --border: #e7e2da;          /* Yeobaek Border */
-  --input-background: #f2f0ec;
+  --border: #dddddd; /* 요청한 보더 컬러 */
+  --border-strong: #d0d7de;
+  --input-background: #ffffff;
 
-  /* Radius (Yeobaek: 12 / 18 / 24 / 32 / 999) */
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
+  --txt_sub01: #666; /* GitHub 본문 텍스트 */
+  --point01: #2e6130; /* 메인 녹색 */
+  --point02: #b6584f; /* GitHub 본문 텍스트 */
+
+  /* Radius (GitHub: 각진 카드, 6px 근처) */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
   --radius-full: 999px;
-  --radius: 18px;
+  --radius: 8px;
 
   /* Motion (Yeobaek: 180–250ms ease-out) */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -42,14 +48,23 @@
 }
 
 /* ─── Base ────────────────────────────────────────────────────────────────── */
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { font-size: 16px; }
+html {
+  font-size: 16px;
+}
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.6;
@@ -60,12 +75,25 @@ body {
   letter-spacing: -0.01em;
 }
 
-button { font-family: inherit; cursor: pointer; }
-select, input, textarea { font-family: inherit; }
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+select,
+input,
+textarea {
+  font-family: inherit;
+  border: 1px solid #ddd;
+  background-color: transparent;
+}
 
 /* iOS Safari 자동 확대 방지: 입력 요소의 렌더 font-size가 16px 미만이면
    포커스 시 화면이 확대됨. 모든 입력 요소에 최소 16px를 보장한다. */
-input, select, textarea {
+input,
+select,
+textarea {
   font-size: 16px;
 }
 
@@ -81,7 +109,9 @@ input, select, textarea {
 .screen-body::-webkit-scrollbar,
 .screen-body-stack6::-webkit-scrollbar,
 .sheet-panel-tall::-webkit-scrollbar,
-.sheet-panel-med::-webkit-scrollbar { display: none; }
+.sheet-panel-med::-webkit-scrollbar {
+  display: none;
+}
 
 /* ─── Component Styles (요소별 단일 클래스) ───────────────────────────────── */
 
@@ -99,21 +129,42 @@ input, select, textarea {
 .gauge-center {
   position: absolute;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
   justify-content: center;
   gap: 0.125rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 780;
+  letter-spacing: -0.09em;
+  line-height: 1;
+  background: linear-gradient(
+    120deg,
+    #f1a6c3,
+    #257aa5,
+    #453474,
+    #f180de,
+    #983bb4
+  );
+  background-size: 260% 260%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientText 5s ease-in-out infinite;
 }
 
 .gauge-number {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   line-height: 1;
-  color: var(--foreground);
+  font-size: 2.5rem;
 }
 
 .gauge-unit {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -129,35 +180,41 @@ input, select, textarea {
 .fill-min {
   flex: 1 1 0%;
   min-width: 0;
+  display: flex;
 }
 
 .habit-option {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   margin-top: 0.25rem;
-  border-radius: var(--radius-sm);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
-  background-color: var(--muted);
   color: var(--muted-foreground);
-  appearance: none;
+  border: none;
+  background: none;
+  text-align: right;
 }
 
 .section-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 500;
-  font-size: 0.625rem;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
   line-height: 1.4;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(122, 122, 122, 0.85);
+  color: #222;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
   margin-bottom: 0.5rem;
@@ -169,27 +226,33 @@ input, select, textarea {
 }
 
 .section-label-plain {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 500;
-  font-size: 0.625rem;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
   line-height: 1.4;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(122, 122, 122, 0.85);
+  color: #000;
 }
 
 .phase-hero {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: none;
-  border: 1px solid var(--border);
-  background-color: var(--card);
+  border: 0;
+  background: linear-gradient(135deg, #fffbfc 0%, #e7e3ff 100%);
   display: block;
   width: 100%;
   padding: 0;
   text-align: left;
   cursor: pointer;
-  transition: transform 0.15s var(--ease), border-color 0.15s var(--ease);
+  transition:
+    transform 0.15s var(--ease),
+    border-color 0.15s var(--ease);
   font-family: inherit;
 }
 
@@ -212,12 +275,16 @@ input, select, textarea {
   gap: 0.375rem;
   margin-top: 0.25rem;
   padding-top: 0.875rem;
-  border-top: 1px solid rgba(231, 226, 218, 0.8);
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  border-top: 1px solid rgba(221, 221, 221, 0.9);
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
-  color: rgba(34, 34, 34, 0.55);
+  color: rgba(31, 35, 40, 0.55);
 }
 
 .row-between-mb4 {
@@ -235,7 +302,7 @@ input, select, textarea {
 }
 
 .phase-dday {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1;
@@ -243,11 +310,15 @@ input, select, textarea {
 }
 
 .phase-dday-suffix {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.625rem;
   line-height: 1.3;
-  color: rgba(122, 122, 122, 0.85);
+  color: rgba(89, 99, 110, 0.85);
 }
 
 .mb3 {
@@ -255,7 +326,7 @@ input, select, textarea {
 }
 
 .phase-hero-name {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.75rem;
   line-height: 1.15;
@@ -265,7 +336,11 @@ input, select, textarea {
 }
 
 .phase-goal {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.5;
@@ -284,17 +359,21 @@ input, select, textarea {
 }
 
 .phase-section {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .score-display {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1.2;
@@ -304,7 +383,7 @@ input, select, textarea {
 .progress-track {
   height: 0.375rem;
   border-radius: var(--radius-full);
-  background-color: rgba(245, 243, 239, 0.5);
+  background-color: rgba(246, 248, 250, 0.8);
   overflow: hidden;
 }
 
@@ -315,22 +394,30 @@ input, select, textarea {
 }
 
 .phase-daterange {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.4;
-  color: rgba(122, 122, 122, 0.85);
+  color: rgba(89, 99, 110, 0.85);
   margin-bottom: 1rem;
 }
 
 .phase-section-mb2 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
   margin-bottom: 0.5rem;
 }
 
@@ -341,8 +428,12 @@ input, select, textarea {
 }
 
 .priority-chip {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 500;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
   font-size: 0.75rem;
   line-height: 1.4;
   padding-left: 0.625rem;
@@ -350,11 +441,8 @@ input, select, textarea {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   border-radius: var(--radius-full);
-  background-color: rgba(245, 243, 239, 0.6);
-  color: rgba(34, 34, 34, 0.72);
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(231, 226, 218, 0.6);
+  background-color: #fff;
+  color: var(--txt_sub01);
 }
 
 .row-between-mb15b {
@@ -365,7 +453,7 @@ input, select, textarea {
 }
 
 .phase-card-name {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.3;
@@ -382,7 +470,7 @@ input, select, textarea {
 }
 
 .score-display-sm {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 0.875rem;
   line-height: 1.2;
@@ -390,15 +478,23 @@ input, select, textarea {
 }
 
 .period-counter {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.625rem;
   line-height: 1.3;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .phase-goal-sm {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -430,7 +526,7 @@ input, select, textarea {
   z-index: 50;
   display: flex;
   align-items: flex-end;
-  background-color: rgba(34, 34, 34, 0.28);
+  background-color: rgba(31, 35, 40, 0.28);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -456,8 +552,30 @@ input, select, textarea {
   margin-bottom: 1.5rem;
 }
 
+/* 중앙 모달 패널 (하단 시트 대신 사용 — 키보드 올라와도 안 밀림) */
+.modal-center-panel {
+  width: 100%;
+  max-width: 26rem;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.modal-center-panel::-webkit-scrollbar {
+  display: none;
+}
+
 .modal-title {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -470,7 +588,11 @@ input, select, textarea {
 }
 
 .field-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -481,26 +603,28 @@ input, select, textarea {
 }
 
 .field-input {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   color: var(--foreground);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   outline: none;
 }
 
 .field-input:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .grid2 {
@@ -510,26 +634,28 @@ input, select, textarea {
 }
 
 .field-input-x3 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   color: var(--foreground);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   outline: none;
 }
 
 .field-input-x3:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .modal-actions {
@@ -539,7 +665,11 @@ input, select, textarea {
 }
 
 .btn-muted-flex {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -553,7 +683,11 @@ input, select, textarea {
 }
 
 .btn-primary-flex2 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -563,6 +697,10 @@ input, select, textarea {
   border-radius: var(--radius-md);
   background-color: var(--primary);
   color: var(--primary-foreground);
+}
+
+.btn-primary-flex2:hover {
+  background-color: var(--primary-hover);
 }
 
 .btn-primary-flex2:disabled {
@@ -592,26 +730,27 @@ input, select, textarea {
 }
 
 .field-input-emoji {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   text-align: center;
   outline: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 .field-input-emoji:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .fill {
@@ -619,26 +758,27 @@ input, select, textarea {
 }
 
 .field-input-b {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   color: var(--foreground);
   outline: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 .field-input-b:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .screen {
@@ -655,7 +795,7 @@ input, select, textarea {
   padding-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.2rem;
   flex-shrink: 0;
 }
 
@@ -664,14 +804,12 @@ input, select, textarea {
   margin-left: -0.25rem;
   border-radius: var(--radius-sm);
   color: var(--muted-foreground);
-}
-
-.back-btn:active {
-  background-color: var(--muted);
+  border: none;
+  background-color: transparent;
 }
 
 .screen-title-truncate {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1.25;
@@ -683,11 +821,11 @@ input, select, textarea {
 }
 
 .screen-subtitle {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 300;
-  font-size: 0.875rem;
+  font-family: "Pretendard", sans-serif;
+  font-weight: 400;
+  font-size: 0.8rem;
   line-height: 1.4;
-  color: var(--muted-foreground);
+  color: var(--txt_sub01);
   margin-top: 0.125rem;
 }
 
@@ -706,20 +844,22 @@ input, select, textarea {
 }
 
 .screen-body-stack6 > * + * {
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .summary-card {
   border-radius: var(--radius-lg);
   padding: 1.25rem;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
-  background-color: var(--card);
+
+  background: linear-gradient(135deg, #f9ede8 0%, #ede8f5 100%);
 }
 
 .summary-goal {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.5;
@@ -735,7 +875,11 @@ input, select, textarea {
 }
 
 .priority-chip-sm {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -744,15 +888,19 @@ input, select, textarea {
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
   border-radius: var(--radius-full);
-  background-color: rgba(245, 243, 239, 0.6);
-  color: rgba(34, 34, 34, 0.72);
+  background-color: rgba(246, 248, 250, 0.9);
+  color: rgba(31, 35, 40, 0.72);
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(231, 226, 218, 0.6);
+  border-color: rgba(221, 221, 221, 0.8);
 }
 
 .btn-primary-full {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -766,6 +914,10 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
+}
+
+.btn-primary-full:hover {
+  background-color: var(--primary-hover);
 }
 
 .row-between-mb3 {
@@ -782,11 +934,15 @@ input, select, textarea {
 }
 
 .icon-muted {
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .btn-link {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -797,7 +953,11 @@ input, select, textarea {
 }
 
 .btn-add-lg {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -805,7 +965,7 @@ input, select, textarea {
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-radius: var(--radius-md);
-  border-width: 2px;
+  border-width: 1px;
   border-style: dashed;
   border-color: var(--border);
   color: var(--muted-foreground);
@@ -813,6 +973,7 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  background-color: #fff;
 }
 
 .stack-2 > * + * {
@@ -824,9 +985,7 @@ input, select, textarea {
   align-items: center;
   gap: 0.75rem;
   background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   border-radius: var(--radius-md);
   padding-left: 1rem;
   padding-right: 1rem;
@@ -848,7 +1007,11 @@ input, select, textarea {
 }
 
 .link-name {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -860,11 +1023,15 @@ input, select, textarea {
 }
 
 .link-url {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.625rem;
   line-height: 1.3;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -872,18 +1039,18 @@ input, select, textarea {
 }
 
 .link-ext-icon {
-  color: rgba(122, 122, 122, 0.45);
+  color: rgba(89, 99, 110, 0.45);
   flex-shrink: 0;
 }
 
 .icon-btn-a {
   padding: 0.25rem;
-  color: rgba(122, 122, 122, 0.6);
+  color: rgba(89, 99, 110, 0.6);
 }
 
 .icon-btn-b {
   padding: 0.25rem;
-  color: rgba(122, 122, 122, 0.32);
+  color: rgba(89, 99, 110, 0.32);
 }
 
 .row-2-mb3 {
@@ -894,7 +1061,11 @@ input, select, textarea {
 }
 
 .phase-badge-muted {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.6875rem;
   line-height: 1.3;
@@ -905,14 +1076,12 @@ input, select, textarea {
   padding-bottom: 0.125rem;
   border-radius: var(--radius-full);
   background-color: var(--muted);
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .card-stack4 {
   background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   border-radius: var(--radius-lg);
   padding: 1.25rem;
 }
@@ -922,38 +1091,39 @@ input, select, textarea {
 }
 
 .field-label-fg {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 400;
-  font-size: 0.6875rem;
+  font-weight: 600;
+  font-size: 0.7rem;
   line-height: 1.4;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--foreground);
+  color: var(--txt_sub01);
   margin-bottom: 0.375rem;
 }
 
 .field-textarea {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   color: var(--foreground);
   outline: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   resize: none;
 }
 
 .field-textarea:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .empty-card {
@@ -966,11 +1136,15 @@ input, select, textarea {
 }
 
 .empty-msg-faint {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: rgba(122, 122, 122, 0.6);
+  color: rgba(89, 99, 110, 0.6);
 }
 
 .dialog-overlay {
@@ -980,7 +1154,7 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(34, 34, 34, 0.28);
+  background-color: rgba(31, 35, 40, 0.28);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   padding-left: 1.5rem;
@@ -996,7 +1170,11 @@ input, select, textarea {
 }
 
 .dialog-title {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.4;
@@ -1011,7 +1189,11 @@ input, select, textarea {
 }
 
 .btn-danger-flex {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1024,7 +1206,11 @@ input, select, textarea {
 }
 
 .dialog-body {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.6;
@@ -1035,12 +1221,12 @@ input, select, textarea {
 .screen-header {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  padding-top: 2.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .screen-title {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.625rem;
   line-height: 1.25;
@@ -1049,13 +1235,17 @@ input, select, textarea {
 }
 
 .phase-section-mb3 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
   margin-bottom: 0.75rem;
 }
 
@@ -1063,26 +1253,37 @@ input, select, textarea {
   position: relative;
 }
 
-.card-delete-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5rem;
-  border-radius: var(--radius-full);
-  background-color: rgba(245, 243, 239, 0.7);
-  color: rgba(122, 122, 122, 0.72);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+/* 목표 삭제 — GitHub Danger Zone 스타일 */
+.danger-zone {
+  border: 1px solid rgba(207, 34, 46, 0.35);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
-.card-delete-btn-sm {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  padding: 0.375rem;
-  border-radius: var(--radius-full);
-  background-color: rgba(242, 240, 236, 0.8);
-  color: rgba(122, 122, 122, 0.6);
+.btn-delete-phase {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  background-color: #ffffff;
+  color: var(--destructive);
+  border: none;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease);
+}
+
+.btn-delete-phase:hover {
+  background-color: rgba(255, 235, 233, 0.6);
 }
 
 .home-header {
@@ -1096,7 +1297,7 @@ input, select, textarea {
 }
 
 .app-title {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.625rem;
   line-height: 1.25;
@@ -1105,24 +1306,27 @@ input, select, textarea {
 }
 
 .phase-switch-btn {
-  margin-top: 0.25rem;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0.375rem;
+  padding-left: 0;
   padding-bottom: 0.375rem;
-  border-radius: var(--radius-full);
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
+  background-color: transparent;
+  border: 0;
+  padding: 0;
 }
 
 .phase-indicator {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.75rem;
   line-height: 1.3;
+  color: var(--txt_sub01);
 }
 
 .chevron-dim {
@@ -1143,27 +1347,16 @@ input, select, textarea {
   flex-direction: column;
   align-items: center;
   padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
-.gauge-caption {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 300;
-  font-size: 0.6875rem;
-  line-height: 1.4;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .gauge-days {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 300;
-  font-size: 0.625rem;
+  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
   line-height: 1.3;
-  color: rgba(122, 122, 122, 0.72);
-  margin-top: 0.25rem;
+  color: var(--txt_sub01);
+  margin-top: 1rem;
 }
 
 .banner-celebrate {
@@ -1174,37 +1367,36 @@ input, select, textarea {
   padding-right: 1.25rem;
   border-radius: var(--radius-md);
   text-align: center;
-  background-color: var(--secondary);
-  border: 1px solid var(--border);
+  background-color: #f8faff;
 }
 
 .banner-text-strong {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: rgba(34, 34, 34, 0.85);
+  color: rgba(31, 35, 40, 0.85);
 }
 
 .banner-notice {
   margin-bottom: 1rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  border-radius: var(--radius-md);
-  background-color: var(--muted);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 .banner-text-muted {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   color: var(--muted-foreground);
+  text-align: center;
 }
 
 .today-score-row {
@@ -1227,11 +1419,9 @@ input, select, textarea {
   padding-bottom: 0.75rem;
   border-radius: var(--radius-md);
   background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
   transition: all var(--dur) var(--ease);
   text-align: left;
+  border: none;
 }
 
 .quicklink-btn:active {
@@ -1247,7 +1437,11 @@ input, select, textarea {
 }
 
 .quicklink-name {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1260,7 +1454,7 @@ input, select, textarea {
 
 .quicklink-ext {
   flex-shrink: 0;
-  color: rgba(122, 122, 122, 0.45);
+  color: rgba(89, 99, 110, 0.45);
 }
 
 .cal-month-nav {
@@ -1275,6 +1469,7 @@ input, select, textarea {
   border-radius: var(--radius-sm);
   background-color: var(--muted);
   color: var(--muted-foreground);
+  border: none;
 }
 
 .icon-flip {
@@ -1282,7 +1477,7 @@ input, select, textarea {
 }
 
 .cal-month-title {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1296,12 +1491,16 @@ input, select, textarea {
 }
 
 .cal-weekday {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
   text-align: center;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
@@ -1313,11 +1512,15 @@ input, select, textarea {
 }
 
 .cal-day-score {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.625rem;
   line-height: 1;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
   margin-top: 0.125rem;
 }
 
@@ -1344,7 +1547,11 @@ input, select, textarea {
 }
 
 .legend-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -1358,20 +1565,19 @@ input, select, textarea {
   background-color: var(--secondary);
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(231, 226, 218, 0.6);
+  border-color: rgba(221, 221, 221, 0.8);
 }
 
 .cal-detail-card {
-  border-radius: var(--radius-lg);
-  background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
-  padding: 1.25rem;
+  padding: 1rem 0;
 }
 
 .card-title {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 600;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1379,7 +1585,11 @@ input, select, textarea {
 }
 
 .empty-msg-py4 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -1411,15 +1621,17 @@ input, select, textarea {
 
 .card-pad {
   background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   border-radius: var(--radius-lg);
   padding: 1.25rem;
 }
 
 .stat-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1428,7 +1640,7 @@ input, select, textarea {
 }
 
 .stat-value {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.875rem;
   line-height: 1.15;
@@ -1436,25 +1648,31 @@ input, select, textarea {
 }
 
 .stat-sub {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 1.4;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .card-pad-mb5 {
   background-color: var(--card);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   margin-bottom: 1.25rem;
 }
 
 .card-title-mb4 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1463,7 +1681,11 @@ input, select, textarea {
 }
 
 .empty-msg-py8 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -1474,7 +1696,11 @@ input, select, textarea {
 }
 
 .card-title-mb3 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1489,7 +1715,11 @@ input, select, textarea {
 }
 
 .chart-label-fg {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1497,7 +1727,11 @@ input, select, textarea {
 }
 
 .chart-label-muted {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1512,7 +1746,11 @@ input, select, textarea {
 }
 
 .empty-msg-py12 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -1530,7 +1768,7 @@ input, select, textarea {
 }
 
 .timeline-score {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1.2;
@@ -1538,7 +1776,11 @@ input, select, textarea {
 }
 
 .timeline-unit {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1546,7 +1788,11 @@ input, select, textarea {
 }
 
 .timeline-date {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1564,7 +1810,11 @@ input, select, textarea {
 }
 
 .timeline-habits {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1592,13 +1842,12 @@ input, select, textarea {
 }
 
 .field-label-fg-plain {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 400;
-  font-size: 0.6875rem;
+  font-weight: 600;
+  font-size: 0.7rem;
   line-height: 1.4;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--foreground);
+  color: var(--txt_sub01);
 }
 
 .row-2-mb2 {
@@ -1608,30 +1857,36 @@ input, select, textarea {
 }
 
 .field-input-inline {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   flex: 1 1 0%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   color: var(--foreground);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
+
   outline: none;
 }
 
 .field-input-inline:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .btn-primary-sm {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1642,6 +1897,10 @@ input, select, textarea {
   border-radius: var(--radius-sm);
   background-color: var(--primary);
   color: var(--primary-foreground);
+}
+
+.btn-primary-sm:hover {
+  background-color: var(--primary-hover);
 }
 
 .stack-15 > * + * {
@@ -1661,7 +1920,11 @@ input, select, textarea {
 }
 
 .option-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1669,7 +1932,11 @@ input, select, textarea {
 }
 
 .btn-primary-flex2b {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1681,8 +1948,16 @@ input, select, textarea {
   color: var(--primary-foreground);
 }
 
+.btn-primary-flex2b:hover {
+  background-color: var(--primary-hover);
+}
+
 .field-label-mb1 {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -1693,26 +1968,27 @@ input, select, textarea {
 }
 
 .field-input-compact {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   color: var(--foreground);
   outline: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 .field-input-compact:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .grid2-gap2 {
@@ -1722,30 +1998,35 @@ input, select, textarea {
 }
 
 .field-input-tight {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
   background-color: var(--card);
-  border-radius: 16px;
+  border-radius: var(--radius-sm);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   color: var(--foreground);
   outline: none;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--border);
 }
 
 .field-input-tight:focus {
-  border-color: rgba(34, 34, 34, 0.28);
+  border-color: rgba(31, 35, 40, 0.28);
 }
 
 .btn-primary-full-sm {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1757,6 +2038,10 @@ input, select, textarea {
   color: var(--primary-foreground);
 }
 
+.btn-primary-full-sm:hover {
+  background-color: var(--primary-hover);
+}
+
 .settings-info-row {
   display: flex;
   align-items: flex-start;
@@ -1766,7 +2051,11 @@ input, select, textarea {
 }
 
 .settings-pts {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1774,7 +2063,11 @@ input, select, textarea {
 }
 
 .settings-info-value {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1784,7 +2077,11 @@ input, select, textarea {
 }
 
 .settings-name {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1793,16 +2090,20 @@ input, select, textarea {
 
 .icon-btn-edit {
   padding: 0.375rem;
-  color: rgba(122, 122, 122, 0.72);
+  color: rgba(89, 99, 110, 0.72);
 }
 
 .icon-btn-del {
   padding: 0.375rem;
-  color: rgba(122, 122, 122, 0.45);
+  color: rgba(89, 99, 110, 0.45);
 }
 
 .btn-add {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1819,6 +2120,7 @@ input, select, textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  background-color: #fff;
 }
 
 .settings-link-emoji {
@@ -1829,7 +2131,11 @@ input, select, textarea {
 }
 
 .settings-name-truncate {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -1840,7 +2146,11 @@ input, select, textarea {
 }
 
 .settings-pts-truncate {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.4;
@@ -1851,7 +2161,11 @@ input, select, textarea {
 }
 
 .btn-reset {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1859,18 +2173,18 @@ input, select, textarea {
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   border-radius: var(--radius-md);
-  background-color: var(--muted);
+  background-color: #ffeded;
   color: var(--destructive);
 }
 
 .bottom-nav {
   flex-shrink: 0;
-  background-color: rgba(250, 249, 247, 0.95);
+  background-color: #222;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top-width: 1px;
   border-top-style: solid;
-  border-color: var(--border);
+  border-color: transparent;
 }
 
 .nav-row {
@@ -1878,7 +2192,11 @@ input, select, textarea {
 }
 
 .nav-label {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.625rem;
   line-height: 1.3;
@@ -1900,7 +2218,7 @@ input, select, textarea {
 }
 
 .app-empty-title {
-  font-family: 'Montserrat', 'Pretendard', sans-serif;
+  font-family: "Montserrat", "Pretendard", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1.25;
@@ -1910,7 +2228,11 @@ input, select, textarea {
 }
 
 .app-empty-caption {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -1921,7 +2243,11 @@ input, select, textarea {
 }
 
 .btn-primary-pad {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1932,6 +2258,10 @@ input, select, textarea {
   border-radius: var(--radius-md);
   background-color: var(--primary);
   color: var(--primary-foreground);
+}
+
+.btn-primary-pad:hover {
+  background-color: var(--primary-hover);
 }
 
 .app-shell {
@@ -1964,14 +2294,13 @@ input, select, textarea {
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
   background-color: var(--card);
   transition: all var(--dur) var(--ease);
 }
 
 .habit-card.is-checked {
   background-color: var(--secondary);
-  border-color: rgba(237, 232, 245, 0.8);
+  border-color: var(--border);
 }
 
 .habit-check {
@@ -1994,7 +2323,11 @@ input, select, textarea {
 }
 
 .habit-name {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -2009,22 +2342,34 @@ input, select, textarea {
 }
 
 .habit-pts {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 300;
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: -1.2;
   flex-shrink: 0;
-  color: var(--muted-foreground);
+  color: var(--point01);
+  margin-left: 6px;
+  background-color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 10px;
 }
 
 .habit-pts.is-bonus {
-  color: var(--accent-foreground);
+  color: var(--point02);
 }
 
 .phase-badge {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
-  font-weight: 500;
-  font-size: 0.6875rem;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
   line-height: 1.3;
   letter-spacing: 0.03em;
   padding: 0.25rem 0.625rem;
@@ -2035,7 +2380,7 @@ input, select, textarea {
   width: 100%;
   text-align: left;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
+  border: none;
   padding: 1rem;
   background-color: var(--card);
   transition: all var(--dur) var(--ease);
@@ -2047,12 +2392,16 @@ input, select, textarea {
 }
 
 .phase-small.is-completed {
-  border-color: rgba(231, 226, 218, 0.6);
+  border-color: rgba(221, 221, 221, 0.8);
   background-color: rgba(244, 239, 230, 0.3);
 }
 
 .retro-save-btn {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -2083,8 +2432,9 @@ input, select, textarea {
   cursor: pointer;
 }
 
-.cal-day.is-selected {
-  box-shadow: 0 0 0 2px var(--primary);
+.cal-day.is-selected .cal-day-num.day-in {
+  color: #000;
+  font-weight: 900;
 }
 
 .cal-day-circle {
@@ -2097,11 +2447,15 @@ input, select, textarea {
 }
 
 .cal-day-circle.is-today {
-  box-shadow: 0 0 0 2px rgba(34, 34, 34, 0.28);
+  box-shadow: 0 0 0 2px rgba(31, 35, 40, 0.28);
 }
 
 .cal-day-num {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.875rem;
   line-height: 1;
@@ -2116,7 +2470,11 @@ input, select, textarea {
 }
 
 .stats-tab {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -2147,8 +2505,8 @@ input, select, textarea {
 }
 
 .timeline-row.is-today {
-  border-color: rgba(34, 34, 34, 0.28);
-  background-color: rgba(237, 232, 245, 0.3);
+  border-color: rgba(31, 35, 40, 0.28);
+  background-color: var(--secondary);
 }
 
 .toggle {
@@ -2194,20 +2552,20 @@ input, select, textarea {
   background: none;
   border: none;
   cursor: pointer;
-  color: rgba(122, 122, 122, 0.6);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .nav-item.is-active {
-  color: var(--primary);
+  color: #fff;
 }
 
 .badge-active {
-  background-color: var(--secondary);
-  color: var(--foreground);
+  background-color: #222;
+  color: #fff;
 }
 
 .badge-upcoming {
-  background-color: var(--secondary);
+  background-color: #ddd;
   color: var(--secondary-foreground);
 }
 
@@ -2217,7 +2575,7 @@ input, select, textarea {
 }
 
 .cal-day-num.day-out {
-  color: rgba(122, 122, 122, 0.45);
+  color: rgba(89, 99, 110, 0.45);
 }
 
 .cal-day-num.day-in {
@@ -2226,7 +2584,11 @@ input, select, textarea {
 
 /* ─── 설정 화면 · 데이터 다운로드 ─────────────────────────────────────────── */
 .settings-desc {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   line-height: 1.5;
@@ -2241,8 +2603,7 @@ input, select, textarea {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background-color: var(--card);
+  background-color: #fff;
   text-align: left;
   cursor: pointer;
   transition: all var(--dur) var(--ease);
@@ -2261,7 +2622,11 @@ input, select, textarea {
 }
 
 .download-btn-title {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.3;
@@ -2269,7 +2634,11 @@ input, select, textarea {
 }
 
 .download-btn-sub {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 1.4;
@@ -2277,7 +2646,11 @@ input, select, textarea {
 }
 
 .import-error {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.5;
@@ -2322,9 +2695,10 @@ input, select, textarea {
   padding: 0.75rem 1.125rem;
   border-radius: var(--radius-full);
   background-color: var(--foreground);
-  box-shadow: 0 8px 24px -6px rgba(34, 34, 34, 0.30);
-  animation: toast-in 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-             toast-out 0.32s ease forwards 1.85s;
+  box-shadow: 0 8px 24px -6px rgba(31, 35, 40, 0.3);
+  animation:
+    toast-in 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    toast-out 0.32s ease forwards 1.85s;
 }
 
 .toast-icon {
@@ -2333,7 +2707,11 @@ input, select, textarea {
 }
 
 .toast-text {
-  font-family: 'Pretendard', -apple-system, 'Noto Sans KR', sans-serif;
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
   font-weight: 500;
   font-size: 0.8125rem;
   line-height: 1.4;
@@ -2341,16 +2719,36 @@ input, select, textarea {
 }
 
 @keyframes toast-in {
-  from { opacity: 0; transform: translateY(1rem); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes toast-out {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(0.75rem); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
 }
 
 /* ─── 전역 스크롤바 (데스크탑) ────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--muted-foreground); border-radius: 3px; }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+}

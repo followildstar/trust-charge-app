@@ -42,7 +42,7 @@ export function PhaseHeroCard({
           <div className="progress-track">
             <div
               className="progress-fill"
-              style={{ width: `${Math.min(100, progress)}%`, background: "linear-gradient(90deg, #C4877D, #C4A8D4)" }}
+              style={{ width: `${Math.min(100, progress)}%`, background: "linear-gradient(90deg, rgb(255 216 210), rgb(126 150 205))" }}
             />
           </div>
         </div>
@@ -64,10 +64,6 @@ export function PhaseHeroCard({
           </div>
         )}
 
-        <div className="hero-open-hint">
-          <Settings size={13} strokeWidth={2} /> 설정 열기
-          <ChevronRight size={14} strokeWidth={2.5} />
-        </div>
       </div>
     </button>
   );

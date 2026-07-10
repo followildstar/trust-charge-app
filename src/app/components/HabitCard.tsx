@@ -22,7 +22,12 @@ export function HabitCard({
         <span className={`habit-name${checked ? " is-checked" : ""}`}>
           {habit.name}
         </span>
-        {habit.options.length > 0 && (
+        <span className={`habit-pts${habit.isBonus ? " is-bonus" : ""}`}>
+        {habit.isBonus ? "+" : ""}{habit.score}P
+      </span>
+       
+      </div>
+       {habit.options.length > 0 && (
           <select
             value={record.selectedOptionId || ""}
             onChange={e => onSetOption(e.target.value)}
@@ -35,10 +40,7 @@ export function HabitCard({
             ))}
           </select>
         )}
-      </div>
-      <span className={`habit-pts${habit.isBonus ? " is-bonus" : ""}`}>
-        {habit.isBonus ? "+" : ""}{habit.score}pt
-      </span>
+      
     </div>
   );
 }

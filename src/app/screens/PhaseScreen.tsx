@@ -11,10 +11,11 @@ import { EMPTY_RETRO } from "../lib/defaults";
 import type { Action, AppState, Habit, Phase, QuickLink, Retrospective } from "../types";
 
 export function PhaseDetailScreen({
-  phase, isActive, dispatch, onBack, onActivate,
+  phase, isActive, phaseCount, dispatch, onBack, onActivate,
 }: {
   phase: Phase;
   isActive: boolean;
+  phaseCount: number;
   dispatch: React.Dispatch<Action>;
   onBack: () => void;
   onActivate: () => void;
@@ -29,6 +30,8 @@ export function PhaseDetailScreen({
   const [retroDraft, setRetroDraft] = useState<Retrospective>(retro);
   const [retroSaved, setRetroSaved] = useState(false);
   const [deleteLinkId, setDeleteLinkId] = useState<string | null>(null);
+  const [confirmDeletePhase, setConfirmDeletePhase] = useState(false);
+  const canDelete = phaseCount > 1;
 
   // 목표 정보 편집 상태
   const [editMeta, setEditMeta] = useState(false);
@@ -80,10 +83,8 @@ export function PhaseDetailScreen({
         </button>
         <div className="fill-min">
           <div className="row-2">
-            <Settings size={16} className="icon-muted" />
             <div className="screen-title-truncate">{phase.name}</div>
           </div>
-          <div className="screen-subtitle">목표 설정</div>
         </div>
         <div className="detail-header-right">
           <div className="phase-dday">{dday.label}</div>
@@ -117,7 +118,6 @@ export function PhaseDetailScreen({
         <div className="card-pad">
           <div className="cal-month-nav">
             <div className="row-2">
-              <Info size={14} className="icon-muted" />
               <span className="card-title">목표 정보</span>
             </div>
             <button onClick={() => setEditMeta(v => !v)} className="btn-link">
@@ -306,7 +306,39 @@ export function PhaseDetailScreen({
             </div>
           )}
         </div>
+
+        {/* Danger zone */}
+        {canDelete && (
+          <div className="danger-zone">
+            <button onClick={() => setConfirmDeletePhase(true)} className="btn-delete-phase">
+              <Trash2 size={15} /> 이 목표 삭제
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* Delete phase confirm */}
+      {confirmDeletePhase && (
+        <div className="dialog-overlay" onClick={() => setConfirmDeletePhase(false)}>
+          <div className="dialog-panel" onClick={e => e.stopPropagation()}>
+            <div className="dialog-title">목표를 삭제할까요?</div>
+            <div className="dialog-body">삭제하면 해당 기간의 모든 기록이 사라져요.</div>
+            <div className="row-3">
+              <button onClick={() => setConfirmDeletePhase(false)} className="btn-muted-flex">취소</button>
+              <button
+                onClick={() => {
+                  dispatch({ type: "DELETE_PHASE", phaseId: phase.id });
+                  setConfirmDeletePhase(false);
+                  onBack();
+                }}
+                className="btn-danger-flex"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Habit editor modal */}
       {editHabit !== null && (
@@ -377,7 +409,6 @@ export function PhaseScreen({
   onGoHome: () => void;
 }) {
   const [showAdd, setShowAdd] = useState(false);
-  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [detailPhaseId, setDetailPhaseId] = useState<string | null>(null);
 
   const activePhase = state.phases.find(p => p.id === state.activePhaseId)!;
@@ -393,6 +424,7 @@ export function PhaseScreen({
         <PhaseDetailScreen
           phase={detailPhase}
           isActive={detailPhase.id === state.activePhaseId}
+          phaseCount={state.phases.length}
           dispatch={dispatch}
           onBack={() => setDetailPhaseId(null)}
           onActivate={() => {
@@ -416,17 +448,7 @@ export function PhaseScreen({
         {activePhase && (
           <div>
             <div className="phase-section-mb3">현재 진행</div>
-            <div className="pos-relative">
-              <PhaseHeroCard phase={activePhase} onOpenDetail={() => setDetailPhaseId(activePhase.id)} />
-              {state.phases.length > 1 && (
-                <button
-                  onClick={() => setConfirmDeleteId(activePhase.id)}
-                  className="card-delete-btn"
-                >
-                  <Trash2 size={13} />
-                </button>
-              )}
-            </div>
+            <PhaseHeroCard phase={activePhase} onOpenDetail={() => setDetailPhaseId(activePhase.id)} />
           </div>
         )}
 
@@ -436,15 +458,7 @@ export function PhaseScreen({
             <div className="phase-section-mb3">예정된 목표</div>
             <div className="stack-3">
               {upcomingOther.map(phase => (
-                <div key={phase.id} className="pos-relative">
-                  <PhaseSmallCard phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
-                  <button
-                    onClick={() => setConfirmDeleteId(phase.id)}
-                    className="card-delete-btn-sm"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                </div>
+                <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
               ))}
             </div>
           </div>
@@ -456,15 +470,7 @@ export function PhaseScreen({
             <div className="phase-section-mb3">완료된 목표</div>
             <div className="stack-3">
               {completedOther.map(phase => (
-                <div key={phase.id} className="pos-relative">
-                  <PhaseSmallCard phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
-                  <button
-                    onClick={() => setConfirmDeleteId(phase.id)}
-                    className="card-delete-btn-sm"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                </div>
+                <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
               ))}
             </div>
           </div>
@@ -485,19 +491,6 @@ export function PhaseScreen({
           onClose={() => setShowAdd(false)}
           onSave={phase => { dispatch({ type: "ADD_PHASE", phase }); setShowAdd(false); }}
         />
-      )}
-
-      {confirmDeleteId && (
-        <div className="dialog-overlay" onClick={() => setConfirmDeleteId(null)}>
-          <div className="dialog-panel" onClick={e => e.stopPropagation()}>
-            <div className="dialog-title">목표를 삭제할까요?</div>
-            <div className="dialog-body">삭제하면 해당 기간의 모든 기록이 사라져요.</div>
-            <div className="row-3">
-              <button onClick={() => setConfirmDeleteId(null)} className="btn-muted-flex">취소</button>
-              <button onClick={() => { dispatch({ type: "DELETE_PHASE", phaseId: confirmDeleteId }); setConfirmDeleteId(null); }} className="btn-danger-flex">삭제</button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

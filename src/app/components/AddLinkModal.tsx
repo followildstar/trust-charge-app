@@ -19,9 +19,8 @@ export function AddLinkModal({
   }
 
   return (
-    <div className="sheet-overlay" onClick={onClose}>
-      <div className="sheet-panel" onClick={e => e.stopPropagation()}>
-        <div className="sheet-handle" />
+    <div className="dialog-overlay" onClick={onClose}>
+      <div className="modal-center-panel" onClick={e => e.stopPropagation()}>
         <div className="modal-title">{link ? "링크 편집" : "링크 추가"}</div>
         <div className="stack-3">
           <div className="row-3">

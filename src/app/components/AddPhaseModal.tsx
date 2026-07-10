@@ -36,9 +36,8 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
   }
 
   return (
-    <div className="sheet-overlay" onClick={onClose}>
-      <div className="sheet-panel-tall" onClick={e => e.stopPropagation()}>
-        <div className="sheet-handle" />
+    <div className="dialog-overlay" onClick={onClose}>
+      <div className="modal-center-panel" onClick={e => e.stopPropagation()}>
         <div className="modal-title">새 목표 추가</div>
         <div className="stack-4">
           <div>

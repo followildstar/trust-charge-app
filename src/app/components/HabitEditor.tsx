@@ -23,9 +23,8 @@ export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>;
   }
 
   return (
-    <div className="sheet-overlay" onClick={onClose}>
-      <div className="sheet-panel-med" onClick={e => e.stopPropagation()}>
-        <div className="sheet-handle" />
+    <div className="dialog-overlay" onClick={onClose}>
+      <div className="modal-center-panel" onClick={e => e.stopPropagation()}>
         <div className="modal-title">{habit?.id ? "항목 편집" : "새 항목 추가"}</div>
         <div className="stack-4">
           <div>
