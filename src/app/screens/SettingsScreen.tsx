@@ -1,12 +1,11 @@
 import { useRef, useState } from "react";
 import type * as React from "react";
 import { Download, FileJson, FileSpreadsheet, Info, Shield, Upload } from "lucide-react";
-import { Toast } from "../components/Toast";
 import { APP_NAME, APP_TAGLINE, APP_VERSION } from "../lib/defaults";
 import { exportStateAsCsv, exportStateAsJson, parseBackupFile } from "../lib/storage";
 import type { Action, AppState } from "../types";
 
-export function SettingsScreen({ state, dispatch }: { state: AppState; dispatch: React.Dispatch<Action>; }) {
+export function SettingsScreen({ state, dispatch, onToast }: { state: AppState; dispatch: React.Dispatch<Action>; onToast: (msg: string) => void; }) {
   const [showReset, setShowReset] = useState(false);
 
   // JSON 복원 상태
@@ -14,9 +13,6 @@ export function SettingsScreen({ state, dispatch }: { state: AppState; dispatch:
   const [pendingImport, setPendingImport] = useState<AppState | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [importFileName, setImportFileName] = useState<string>("");
-
-  // 완료 토스트
-  const [toast, setToast] = useState<string | null>(null);
 
   // 데이터 요약
   const phaseCount = state.phases.length;
@@ -42,7 +38,7 @@ export function SettingsScreen({ state, dispatch }: { state: AppState; dispatch:
   function confirmImport() {
     if (pendingImport) {
       dispatch({ type: "IMPORT_DATA", state: pendingImport });
-      setToast("데이터를 복원했어요");
+      onToast("데이터를 복원했어요");
     }
     setPendingImport(null);
     setImportFileName("");
@@ -170,7 +166,7 @@ export function SettingsScreen({ state, dispatch }: { state: AppState; dispatch:
             <div className="dialog-body">초기화하면 모든 기록, 습관, 목표 데이터가 삭제돼요. 이 작업은 되돌릴 수 없어요.</div>
             <div className="row-3">
               <button onClick={() => setShowReset(false)} className="btn-muted-flex">취소</button>
-              <button onClick={() => { dispatch({ type: "RESET_DATA" }); setShowReset(false); setToast("모든 데이터를 초기화했어요"); }} className="btn-danger-flex">초기화</button>
+              <button onClick={() => { dispatch({ type: "RESET_DATA" }); setShowReset(false); onToast("모든 데이터를 초기화했어요"); }} className="btn-danger-flex">초기화</button>
             </div>
           </div>
         </div>
@@ -207,7 +203,6 @@ export function SettingsScreen({ state, dispatch }: { state: AppState; dispatch:
         </div>
       )}
 
-      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }
