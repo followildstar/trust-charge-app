@@ -1,19 +1,31 @@
 import { useReducer, useState, useEffect } from "react";
+import { format } from "date-fns";
 
 import type { AppState, Screen } from "./types";
 import { appReducer } from "./lib/reducer";
 import { loadState, STORAGE_KEY } from "./lib/storage";
+import { isDateInRange } from "./lib/calc";
 
 import { BottomNav } from "./components/BottomNav";
+import { Toast } from "./components/Toast";
 import { HomeScreen } from "./screens/HomeScreen";
 import { CalendarScreen } from "./screens/CalendarScreen";
 import { StatsScreen } from "./screens/StatsScreen";
 import { PhaseScreen } from "./screens/PhaseScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 
+// 오늘 날짜가 활성 목표 기간에 포함되면 home, 아니면(과거·미래) calendar 로 시작
+function getInitialScreen(state: AppState): Screen {
+  const active = state.phases.find(p => p.id === state.activePhaseId) ?? state.phases[0];
+  if (!active) return "home";
+  const today = format(new Date(), "yyyy-MM-dd");
+  return isDateInRange(today, active.startDate, active.endDate) ? "home" : "calendar";
+}
+
 export default function App() {
   const [state, dispatch] = useReducer(appReducer, undefined, loadState);
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>(() => getInitialScreen(loadState()));
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -43,13 +55,14 @@ export default function App() {
       style={{ height: "100dvh" }}
     >
       <div key={screen} className="app-viewport">
-        {screen === "home" && <HomeScreen state={safeState} dispatch={dispatch} onGoPhases={() => setScreen("phases")} />}
+        {screen === "home" && <HomeScreen state={safeState} dispatch={dispatch} onGoPhases={() => setScreen("phases")} onToast={setToast} />}
         {screen === "calendar" && <CalendarScreen state={safeState} dispatch={dispatch} />}
         {screen === "stats" && <StatsScreen state={safeState} />}
         {screen === "phases" && <PhaseScreen state={safeState} dispatch={dispatch} onGoHome={() => setScreen("home")} />}
-        {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} />}
+        {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
       </div>
       <BottomNav screen={screen} onNavigate={setScreen} />
+      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }
