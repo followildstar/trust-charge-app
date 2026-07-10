@@ -78,7 +78,7 @@ export function HomeScreen({
 
         {/* Banners */}
         {allBasicChecked && (
-          <div className="banner-celebrate" style={{ background: "linear-gradient(135deg, #F9EDE8 0%, #EDE8F5 100%)" }}>
+          <div className="banner-celebrate">
             <div className="banner-text-strong">🎉 오늘 모든 항목을 완료했어요!</div>
           </div>
         )}
