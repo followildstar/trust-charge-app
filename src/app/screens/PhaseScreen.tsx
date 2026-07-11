@@ -446,7 +446,7 @@ export function PhaseScreen({
         {/* Active hero */}
         {activePhase && (
           <div>
-            <div className="phase-section-mb3">현재 진행</div>
+            {/* <div className="phase-section-mb3">현재 진행</div> */}
             <PhaseHeroCard phase={activePhase} onOpenDetail={() => setDetailPhaseId(activePhase.id)} />
           </div>
         )}
