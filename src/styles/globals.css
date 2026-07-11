@@ -5,6 +5,31 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Pretendard (한글 최적화) + 게이지 숫자용 Montserrat */
+
+@font-face {
+  font-family: "GMarketSans";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
+    format("woff");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GMarketSans";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GMarketSans";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+    format("woff");
+  font-weight: 700;
+  font-display: swap;
+}
+
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap");
 
@@ -33,6 +58,7 @@
   --txt_sub01: #666; /* GitHub 본문 텍스트 */
   --point01: #2e6130; /* 메인 녹색 */
   --point02: #b6584f; /* GitHub 본문 텍스트 */
+  --point03: #7876c1; /* GitHub 본문 텍스트 */
 
   /* Radius (GitHub: 각진 카드, 6px 근처) */
   --radius-sm: 6px;
@@ -153,7 +179,7 @@ textarea {
 }
 
 .gauge-number {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   line-height: 1;
   font-size: 2.5rem;
@@ -165,7 +191,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
   letter-spacing: 0.12em;
@@ -201,6 +227,7 @@ textarea {
   border: none;
   background: none;
   text-align: right;
+  appearance: none;
 }
 
 .section-label {
@@ -289,9 +316,9 @@ textarea {
 
 .row-between-mb4 {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .col-end {
@@ -302,7 +329,7 @@ textarea {
 }
 
 .phase-dday {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1;
@@ -315,7 +342,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.625rem;
   line-height: 1.3;
   color: rgba(89, 99, 110, 0.85);
@@ -326,7 +353,7 @@ textarea {
 }
 
 .phase-hero-name {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.75rem;
   line-height: 1.15;
@@ -365,15 +392,15 @@ textarea {
     "Noto Sans KR",
     sans-serif;
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
 }
 
 .score-display {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1.2;
@@ -399,10 +426,10 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.4;
-  color: rgba(89, 99, 110, 0.85);
+  color: var(--muted-foreground);
   margin-bottom: 1rem;
 }
 
@@ -417,7 +444,7 @@ textarea {
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
   margin-bottom: 0.5rem;
 }
 
@@ -453,7 +480,7 @@ textarea {
 }
 
 .phase-card-name {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.3;
@@ -470,7 +497,7 @@ textarea {
 }
 
 .score-display-sm {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 0.875rem;
   line-height: 1.2;
@@ -483,10 +510,10 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.625rem;
   line-height: 1.3;
-  color: rgba(89, 99, 110, 0.72);
+  color: #333;
 }
 
 .phase-goal-sm {
@@ -505,7 +532,7 @@ textarea {
 .progress-track-sm {
   height: 0.25rem;
   border-radius: var(--radius-full);
-  background-color: var(--muted);
+  background-color: #fff;
   overflow: hidden;
   margin-bottom: 0.5rem;
 }
@@ -809,7 +836,7 @@ textarea {
 }
 
 .screen-title-truncate {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1.25;
@@ -934,7 +961,7 @@ textarea {
 }
 
 .icon-muted {
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
 }
 
 .btn-link {
@@ -946,7 +973,7 @@ textarea {
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.4;
-  color: var(--primary);
+  color: var(--txt_sub01);
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -1028,10 +1055,10 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.625rem;
   line-height: 1.3;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1076,7 +1103,7 @@ textarea {
   padding-bottom: 0.125rem;
   border-radius: var(--radius-full);
   background-color: var(--muted);
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
 }
 
 .card-stack4 {
@@ -1110,7 +1137,7 @@ textarea {
   font-size: 16px;
   line-height: 1.4;
   width: 100%;
-  background-color: var(--card);
+  background-color: #fff;
   border-radius: var(--radius-sm);
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1141,7 +1168,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
   color: rgba(89, 99, 110, 0.6);
@@ -1211,7 +1238,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--muted-foreground);
@@ -1223,10 +1250,13 @@ textarea {
   padding-right: 1.5rem;
   padding-top: 2.25rem;
   padding-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .screen-title {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.625rem;
   line-height: 1.25;
@@ -1245,7 +1275,7 @@ textarea {
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
   margin-bottom: 0.75rem;
 }
 
@@ -1297,7 +1327,7 @@ textarea {
 }
 
 .app-title {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.625rem;
   line-height: 1.25;
@@ -1351,7 +1381,7 @@ textarea {
 }
 
 .gauge-days {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
   line-height: 1.3;
@@ -1376,7 +1406,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
   color: rgba(31, 35, 40, 0.85);
@@ -1392,7 +1422,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.7rem;
   line-height: 1.5;
   color: var(--muted-foreground);
@@ -1477,7 +1507,7 @@ textarea {
 }
 
 .cal-month-title {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 0.9375rem;
   line-height: 1.4;
@@ -1500,7 +1530,7 @@ textarea {
   font-size: 0.6875rem;
   line-height: 1.4;
   text-align: center;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
@@ -1517,10 +1547,10 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.625rem;
   line-height: 1;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
   margin-top: 0.125rem;
 }
 
@@ -1552,7 +1582,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
   color: var(--muted-foreground);
@@ -1590,7 +1620,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--muted-foreground);
@@ -1632,7 +1662,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted-foreground);
@@ -1640,7 +1670,7 @@ textarea {
 }
 
 .stat-value {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.875rem;
   line-height: 1.15;
@@ -1653,10 +1683,10 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
 }
 
 .card-pad-mb5 {
@@ -1686,7 +1716,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--muted-foreground);
@@ -1741,7 +1771,7 @@ textarea {
 .bar-track {
   height: 0.5rem;
   border-radius: var(--radius-full);
-  background-color: var(--muted);
+  background-color: #ddd;
   overflow: hidden;
 }
 
@@ -1751,7 +1781,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--muted-foreground);
@@ -1768,7 +1798,7 @@ textarea {
 }
 
 .timeline-score {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.375rem;
   line-height: 1.2;
@@ -1781,7 +1811,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted-foreground);
@@ -1854,6 +1884,7 @@ textarea {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+  width: 100%;
 }
 
 .field-input-inline {
@@ -2056,12 +2087,29 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted-foreground);
 }
-
+.settings-pts.ptsop {
+  font-family:
+    "Pretendard",
+    -apple-system,
+    "Noto Sans KR",
+    sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  flex-shrink: 0;
+  color: var(--point01);
+  margin-left: 6px;
+  background-color: #ffffff;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.settings-pts.ptsop.is-bonus {
+  color: var(--point02);
+}
 .settings-info-value {
   font-family:
     "Pretendard",
@@ -2090,7 +2138,7 @@ textarea {
 
 .icon-btn-edit {
   padding: 0.375rem;
-  color: rgba(89, 99, 110, 0.72);
+  color: var(--foreground);
 }
 
 .icon-btn-del {
@@ -2151,7 +2199,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.4;
   color: var(--muted-foreground);
@@ -2218,7 +2266,7 @@ textarea {
 }
 
 .app-empty-title {
-  font-family: "Montserrat", "Pretendard", sans-serif;
+  font-family: "Montserrat", "GMarketSans", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1.25;
@@ -2233,7 +2281,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
   letter-spacing: 0.12em;
@@ -2349,7 +2397,6 @@ textarea {
     sans-serif;
   font-weight: 600;
   font-size: 10px;
-  line-height: -1.2;
   flex-shrink: 0;
   color: var(--point01);
   margin-left: 6px;
@@ -2516,7 +2563,7 @@ textarea {
   transition: all var(--dur) var(--ease);
   border: none;
   cursor: pointer;
-  background-color: var(--muted);
+  background-color: #c6c6c6;
   padding: 0;
 }
 
@@ -2589,7 +2636,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.75rem;
   line-height: 1.5;
   color: var(--muted-foreground);
@@ -2639,7 +2686,7 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.6875rem;
   line-height: 1.4;
   color: var(--muted-foreground);

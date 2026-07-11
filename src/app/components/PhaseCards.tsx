@@ -97,7 +97,7 @@ export function PhaseSmallCard({
       <div className="progress-track-sm">
         <div
           className="progress-fill-plain"
-          style={{ width: `${Math.min(100, progress)}%`, background: isCompleted ? "var(--muted-foreground)" : "var(--primary)" }}
+          style={{ width: `${Math.min(100, progress)}%`, background: isCompleted ? "var(--muted-foreground)" : "var(--point03)" }}
         />
       </div>
       <div className="period-counter">

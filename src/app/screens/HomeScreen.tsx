@@ -59,8 +59,7 @@ export function HomeScreen({
         </div>
         <button
           onClick={onGoPhases}
-          className="phase-switch-btn"
-        >
+          className="phase-switch-btn">
           <span className="phase-indicator">{activePhase.name}</span>
           <ChevronRight size={12} className="chevron-dim" />
         </button>

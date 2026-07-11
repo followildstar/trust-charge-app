@@ -178,7 +178,7 @@ export function PhaseDetailScreen({
               <div key={h.id} className="list-row">
                 <div className="fill-min">
                   <div className="settings-name">{h.name}</div>
-                  <div className="settings-pts">{h.score}pt{h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
+                  <div className="settings-pts ptsop">{h.score}P{h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
                 </div>
                 <button onClick={() => setEditHabit(h)} className="icon-btn-edit"><Edit2 size={14} /></button>
                 <button onClick={() => setDeleteHabitId(h.id)} className="icon-btn-del"><Trash2 size={14} /></button>
@@ -198,7 +198,7 @@ export function PhaseDetailScreen({
               <div key={h.id} className="list-row">
                 <div className="fill-min">
                   <div className="settings-name">{h.name}</div>
-                  <div className="settings-pts">+{h.score}pt (보너스){h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
+                  <div className="settings-pts ptsop is-bonus">+ {h.score}P{h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
                 </div>
                 <button onClick={() => setEditHabit(h)} className="icon-btn-edit"><Edit2 size={14} /></button>
                 <button onClick={() => setDeleteHabitId(h.id)} className="icon-btn-del"><Trash2 size={14} /></button>
@@ -440,7 +440,6 @@ export function PhaseScreen({
     <div className="screen">
       <div className="screen-header">
         <div className="screen-title">목표</div>
-        <div className="screen-subtitle">실천 기간을 관리하세요</div>
       </div>
 
       <div className="screen-body-stack6">
