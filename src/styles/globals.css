@@ -120,7 +120,7 @@ textarea {
 input,
 select,
 textarea {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 /* ─── Scrollbar 숨김 (스크롤 영역들) ──────────────────────────────────────── */
@@ -1647,9 +1647,8 @@ textarea {
 
 .card-pad {
   background-color: var(--card);
-
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  padding: 1rem;
 }
 
 .stat-label {
@@ -1667,8 +1666,8 @@ textarea {
 
 .stat-value {
   font-family: "Montserrat", "GMarketSans", sans-serif;
-  font-weight: 700;
-  font-size: 1.875rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   line-height: 1.15;
   color: var(--foreground);
 }
