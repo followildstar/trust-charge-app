@@ -77,6 +77,21 @@ export function appReducer(state: AppState, action: Action): AppState {
         habits: phase.habits.filter(h => h.id !== action.habitId),
       }));
 
+    case "REORDER_HABITS":
+      // 같은 그룹(기본 or 보너스) 안에서만 순서를 재배치.
+      // orderedIds 순서대로 order 값을 0,1,2...로 다시 매긴다.
+      return updateTargetPhase(state, action.phaseId, phase => {
+        const orderMap = new Map(action.orderedIds.map((id, i) => [id, i]));
+        return {
+          ...phase,
+          habits: phase.habits.map(h =>
+            h.isBonus === action.isBonus && orderMap.has(h.id)
+              ? { ...h, order: orderMap.get(h.id)! }
+              : h
+          ),
+        };
+      });
+
     case "SET_DATE_RANGE":
       return updateTargetPhase(state, action.phaseId, phase => ({
         ...phase, startDate: action.startDate, endDate: action.endDate,
@@ -120,6 +135,13 @@ export function appReducer(state: AppState, action: Action): AppState {
         ...p,
         links: p.links ?? [],
         retrospective: p.retrospective ?? EMPTY_RETRO,
+        habits: (p.habits ?? []).map(h => ({
+          ...h,
+          options: (h.options ?? []).map(o => ({
+            ...o,
+            score: typeof o.score === "number" ? o.score : h.score,
+          })),
+        })),
       }));
       const activeExists = phases.some(p => p.id === imported.activePhaseId);
       return {
