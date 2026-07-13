@@ -17,6 +17,14 @@ export function loadState(): AppState {
           ...p,
           links: p.links ?? [],
           retrospective: p.retrospective ?? EMPTY_RETRO,
+          // 옵션에 score가 없던 옛 데이터는 항목 점수로 채워 NaN 방지
+          habits: (p.habits ?? []).map(h => ({
+            ...h,
+            options: (h.options ?? []).map(o => ({
+              ...o,
+              score: typeof o.score === "number" ? o.score : h.score,
+            })),
+          })),
         })),
       };
     }
