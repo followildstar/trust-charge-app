@@ -1,8 +1,10 @@
 import { useReducer, useState, useEffect } from "react";
+import { format } from "date-fns";
 
 import type { AppState, Screen } from "./types";
 import { appReducer } from "./lib/reducer";
 import { loadState, STORAGE_KEY } from "./lib/storage";
+import { isDateInRange } from "./lib/calc";
 
 import { BottomNav } from "./components/BottomNav";
 import { Toast } from "./components/Toast";
@@ -12,9 +14,17 @@ import { StatsScreen } from "./screens/StatsScreen";
 import { PhaseScreen } from "./screens/PhaseScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 
+// 오늘이 활성 목표 기간에 포함되면 home, 아니면 calendar 로 시작
+function getInitialScreen(state: AppState): Screen {
+  const active = state.phases.find(p => p.id === state.activePhaseId) ?? state.phases[0];
+  if (!active) return "home";
+  const today = format(new Date(), "yyyy-MM-dd");
+  return isDateInRange(today, active.startDate, active.endDate) ? "home" : "calendar";
+}
+
 export default function App() {
   const [state, dispatch] = useReducer(appReducer, undefined, loadState);
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>(() => getInitialScreen(loadState()));
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
