@@ -2795,3 +2795,63 @@ textarea {
   background: var(--muted-foreground);
   border-radius: 3px;
 }
+
+/* ─── 드래그 손잡이 (항목 순서 변경) ──────────────────────────────────────── */
+.drag-handle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  margin-left: -0.25rem;
+  color: var(--muted-foreground);
+  cursor: grab;
+  touch-action: none; /* 모바일에서 드래그 중 스크롤 방지 */
+}
+.drag-handle:active { cursor: grabbing; }
+
+/* Reorder.Item 이 드래그되는 동안 위로 살짝 떠 보이게 */
+.list-row {
+  position: relative;
+}
+
+/* ─── HabitEditor 옵션별 점수 입력 ────────────────────────────────────────── */
+.option-hint {
+  font-family: "Pretendard", -apple-system, "Noto Sans KR", sans-serif;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+}
+
+.option-add-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-score-input {
+  width: 4rem;
+  flex-shrink: 0;
+}
+
+.option-chip-score {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  margin-left: auto;
+  margin-right: 0.375rem;
+}
+
+.option-chip-score-input {
+  width: 3.25rem;
+  text-align: center;
+}
+
+.option-chip-pt {
+  font-family: "Pretendard", -apple-system, "Noto Sans KR", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
