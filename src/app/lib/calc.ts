@@ -14,29 +14,46 @@ export function isDateInRange(date: string, startDate: string, endDate: string):
   return !isBefore(d, parseISO(startDate)) && !isAfter(d, parseISO(endDate));
 }
 
+// 이 항목이 하루에 받을 수 있는 최대 점수
+// 옵션이 있으면 옵션 중 최고 점수, 없으면 항목 자체 점수
+export function habitMaxScore(h: { score: number; options: { score: number }[] }): number {
+  if (h.options.length > 0) {
+    return Math.max(...h.options.map(o => o.score));
+  }
+  return h.score;
+}
+
+// 이 항목이 오늘 실제로 획득한 점수 (선택한 옵션 기준)
+export function habitEarnedScore(
+  h: { score: number; options: { id: string; score: number }[] },
+  rec: { checked: boolean; selectedOptionId: string } | undefined,
+): number {
+  if (!rec?.checked) return 0;
+  if (h.options.length > 0) {
+    // 옵션이 있는데 아직 선택 안 했으면 0점 (선택해야 점수 인정)
+    if (!rec.selectedOptionId) return 0;
+    const opt = h.options.find(o => o.id === rec.selectedOptionId);
+    return opt ? opt.score : 0;
+  }
+  return h.score;
+}
+
 export function calcScore(phase: Phase, date: string): number {
   if (!isDateInRange(date, phase.startDate, phase.endDate)) return 0;
   const dayRec = phase.records[date] || {};
   const basicHabits = phase.habits.filter(h => h.enabled && !h.isBonus);
   const bonusHabits = phase.habits.filter(h => h.enabled && h.isBonus);
-  const totalBasicPts = basicHabits.reduce((s, h) => s + h.score, 0);
+  // 기본 항목 최대치 = 각 항목의 최고 옵션 점수 합
+  const totalBasicPts = basicHabits.reduce((s, h) => s + habitMaxScore(h), 0);
 
   let checkedBasicPts = 0;
   let checkedBonusPts = 0;
 
   for (const h of basicHabits) {
-    const rec = dayRec[h.id];
-    if (rec?.checked) {
-      if (h.options.length > 0 && rec.selectedOptionId) {
-        const opt = h.options.find(o => o.id === rec.selectedOptionId);
-        checkedBasicPts += opt ? h.score : 0;
-      } else {
-        checkedBasicPts += h.score;
-      }
-    }
+    checkedBasicPts += habitEarnedScore(h, dayRec[h.id]);
   }
   for (const h of bonusHabits) {
-    if (dayRec[h.id]?.checked) checkedBonusPts += h.score;
+    checkedBonusPts += habitEarnedScore(h, dayRec[h.id]);
   }
 
   const base = phase.baseScore;
@@ -59,22 +76,14 @@ export function calcTotalProgress(phase: Phase): number {
     const dayRec = phase.records[ds] || {};
     const basicHabits = phase.habits.filter(h => h.enabled && !h.isBonus);
     const bonusHabits = phase.habits.filter(h => h.enabled && h.isBonus);
-    const totalBasicPts = basicHabits.reduce((s, h) => s + h.score, 0);
+    const totalBasicPts = basicHabits.reduce((s, h) => s + habitMaxScore(h), 0);
     let checkedBasicPts = 0;
     let checkedBonusPts = 0;
     for (const h of basicHabits) {
-      const rec = dayRec[h.id];
-      if (rec?.checked) {
-        if (h.options.length > 0 && rec.selectedOptionId) {
-          const opt = h.options.find(o => o.id === rec.selectedOptionId);
-          checkedBasicPts += opt ? h.score : 0;
-        } else {
-          checkedBasicPts += h.score;
-        }
-      }
+      checkedBasicPts += habitEarnedScore(h, dayRec[h.id]);
     }
     for (const h of bonusHabits) {
-      if (dayRec[h.id]?.checked) checkedBonusPts += h.score;
+      checkedBonusPts += habitEarnedScore(h, dayRec[h.id]);
     }
     const dayFraction = totalBasicPts > 0 ? checkedBasicPts / totalBasicPts : 0;
     accumulated += dayFraction * perDayMax + checkedBonusPts;
