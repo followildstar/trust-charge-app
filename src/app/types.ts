@@ -1,4 +1,4 @@
-export interface HabitOption { id: string; label: string; }
+export interface HabitOption { id: string; label: string; score: number; }
 export interface Habit {
   id: string; name: string; score: number; options: HabitOption[];
   isBonus: boolean; enabled: boolean; order: number;
@@ -41,6 +41,7 @@ export type Action =
   | { type: "ADD_HABIT"; habit: Habit; phaseId?: string }
   | { type: "UPDATE_HABIT"; habit: Habit; phaseId?: string }
   | { type: "DELETE_HABIT"; habitId: string; phaseId?: string }
+  | { type: "REORDER_HABITS"; isBonus: boolean; orderedIds: string[]; phaseId?: string }
   | { type: "SET_DATE_RANGE"; startDate: string; endDate: string; phaseId?: string }
   | { type: "SET_BASE_SCORE"; score: number; phaseId?: string }
   | { type: "SET_PHASE_META"; name: string; mainGoal: string; priority: string[]; phaseId?: string }
