@@ -1,14 +1,50 @@
 import { useEffect, useState } from "react";
 import type * as React from "react";
-import { ArrowLeft, ChevronRight, Edit2, ExternalLink, Info, Link2, Plus, Settings, Trash2 } from "lucide-react";
+import { Reorder, useDragControls } from "motion/react";
+import { ArrowLeft, ChevronRight, Edit2, ExternalLink, GripVertical, Link2, Plus, Trash2 } from "lucide-react";
 import { AddLinkModal } from "../components/AddLinkModal";
 import { AddPhaseModal } from "../components/AddPhaseModal";
 import { HabitEditor } from "../components/HabitEditor";
 import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
-import { getDday, getPhaseStatus } from "../lib/calc";
+import { getDday, getPhaseStatus, habitMaxScore } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
 import type { Action, AppState, Habit, Phase, QuickLink, Retrospective } from "../types";
+
+// 드래그로 순서를 바꿀 수 있는 습관 행 (손잡이만 드래그 트리거)
+function DraggableHabitRow({
+  habit, onEdit, onDelete,
+}: {
+  habit: Habit;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
+  const controls = useDragControls();
+  const max = habitMaxScore(habit);
+  const ptsText = `${habit.isBonus ? "+ " : ""}${max}P${habit.options.length > 0 ? ` · ${habit.options.length}옵션` : ""}`;
+  return (
+    <Reorder.Item
+      value={habit}
+      dragListener={false}
+      dragControls={controls}
+      className="list-row"
+    >
+      <button
+        className="drag-handle"
+        onPointerDown={e => controls.start(e)}
+        aria-label="순서 변경"
+      >
+        <GripVertical size={16} />
+      </button>
+      <div className="fill-min">
+        <div className="settings-name">{habit.name}</div>
+        <div className={`settings-pts ptsop${habit.isBonus ? " is-bonus" : ""}`}>{ptsText}</div>
+      </div>
+      <button onClick={onEdit} className="icon-btn-edit"><Edit2 size={14} /></button>
+      <button onClick={onDelete} className="icon-btn-del"><Trash2 size={14} /></button>
+    </Reorder.Item>
+  );
+}
 
 export function PhaseDetailScreen({
   phase, isActive, phaseCount, dispatch, onBack, onActivate,
@@ -173,18 +209,21 @@ export function PhaseDetailScreen({
         {/* 기본 항목 */}
         <div>
           <div className="card-title-mb3">기본 항목</div>
-          <div className="stack-2">
+          <Reorder.Group
+            axis="y"
+            values={basicHabits}
+            onReorder={next => dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: false, orderedIds: next.map(h => h.id) })}
+            className="stack-2"
+          >
             {basicHabits.map(h => (
-              <div key={h.id} className="list-row">
-                <div className="fill-min">
-                  <div className="settings-name">{h.name}</div>
-                  <div className="settings-pts ptsop">{h.score}P{h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
-                </div>
-                <button onClick={() => setEditHabit(h)} className="icon-btn-edit"><Edit2 size={14} /></button>
-                <button onClick={() => setDeleteHabitId(h.id)} className="icon-btn-del"><Trash2 size={14} /></button>
-              </div>
+              <DraggableHabitRow
+                key={h.id}
+                habit={h}
+                onEdit={() => setEditHabit(h)}
+                onDelete={() => setDeleteHabitId(h.id)}
+              />
             ))}
-          </div>
+          </Reorder.Group>
           <button onClick={() => setEditHabit({ isBonus: false, order: basicHabits.length })} className="btn-add">
             <Plus size={14} /> 기본 항목 추가
           </button>
@@ -193,18 +232,21 @@ export function PhaseDetailScreen({
         {/* 보너스 항목 */}
         <div>
           <div className="card-title-mb3">보너스 항목</div>
-          <div className="stack-2">
+          <Reorder.Group
+            axis="y"
+            values={bonusHabits}
+            onReorder={next => dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: true, orderedIds: next.map(h => h.id) })}
+            className="stack-2"
+          >
             {bonusHabits.map(h => (
-              <div key={h.id} className="list-row">
-                <div className="fill-min">
-                  <div className="settings-name">{h.name}</div>
-                  <div className="settings-pts ptsop is-bonus">+ {h.score}P{h.options.length > 0 ? ` · ${h.options.length}옵션` : ""}</div>
-                </div>
-                <button onClick={() => setEditHabit(h)} className="icon-btn-edit"><Edit2 size={14} /></button>
-                <button onClick={() => setDeleteHabitId(h.id)} className="icon-btn-del"><Trash2 size={14} /></button>
-              </div>
+              <DraggableHabitRow
+                key={h.id}
+                habit={h}
+                onEdit={() => setEditHabit(h)}
+                onDelete={() => setDeleteHabitId(h.id)}
+              />
             ))}
-          </div>
+          </Reorder.Group>
           <button onClick={() => setEditHabit({ isBonus: true, order: bonusHabits.length })} className="btn-add">
             <Plus size={14} /> 보너스 항목 추가
           </button>
