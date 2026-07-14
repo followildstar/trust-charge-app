@@ -230,6 +230,7 @@ textarea {
   text-align: right;
   appearance: none;
   letter-spacing: -0.5px;
+  text-align: right;
 }
 
 .section-label {
@@ -588,7 +589,7 @@ textarea {
   background-color: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
   max-height: 80vh;
   overflow-y: auto;
   -ms-overflow-style: none;
@@ -942,7 +943,7 @@ textarea {
 }
 
 .btn-primary-full:hover {
-  background-color: var(--primary-hover);
+  background-color: #474589;
 }
 
 .row-between-mb3 {
@@ -1183,8 +1184,8 @@ textarea {
   background-color: rgba(31, 35, 40, 0.28);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .dialog-panel {
@@ -2215,12 +2216,13 @@ span.legend-label.today {
 
 .bottom-nav {
   flex-shrink: 0;
-  background-color: #222;
+  background-color: #2c2c2c;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top-width: 1px;
   border-top-style: solid;
   border-color: transparent;
+  height:70px;
 }
 
 .nav-row {
