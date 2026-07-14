@@ -44,7 +44,7 @@ export function HabitCard({
         >
           <option value="">옵션 선택</option>
           {habit.options.map(o => (
-            <option key={o.id} value={o.id}>{o.label} · {o.score}P</option>
+            <option key={o.id} value={o.id}>{o.label}</option>
           ))}
         </select>
       )}
