@@ -67,7 +67,7 @@ export function CalendarScreen({ state, dispatch }: { state: AppState; dispatch:
             if (inRange) {
               textClass = "day-in";
               if (dayStatus.isFullDay) bg = "var(--primary)";
-              else if (dayStatus.score > activePhase.baseScore) bg = "#cfcfcf";
+              else if (dayStatus.score > activePhase.baseScore) bg = "#e9e9e9";
             }
             return (
               <button key={ds} onClick={() => setSelectedDate(ds)} className={`cal-day${isSelected ? " is-selected" : ""}`}>
