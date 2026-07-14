@@ -207,6 +207,7 @@ textarea {
   flex: 1 1 0%;
   min-width: 0;
   display: flex;
+  margin-left: 7px;
 }
 
 .habit-option {
@@ -1883,24 +1884,16 @@ textarea {
 }
 
 .field-input-inline {
-  font-family:
-    "Pretendard",
-    -apple-system,
-    "Noto Sans KR",
-    sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.4;
-  flex: 1 1 0%;
-  background-color: var(--card);
-  border-radius: var(--radius-sm);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-  color: var(--foreground);
-
-  outline: none;
+    font-family: Pretendard, -apple-system, Noto Sans KR, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: var(--card);
+    border-radius: var(--radius-sm);
+    padding: .875rem 1rem;
+    color: var(--foreground);
+    outline: none;
+    width: 100%;
 }
 
 .field-input-inline:focus {
@@ -1908,22 +1901,16 @@ textarea {
 }
 
 .btn-primary-sm {
-  font-family:
-    "Pretendard",
-    -apple-system,
-    "Noto Sans KR",
-    sans-serif;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  line-height: 1.4;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-radius: var(--radius-sm);
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  word-break: keep-all;
+    font-family: Pretendard, -apple-system, Noto Sans KR, sans-serif;
+    font-weight: 500;
+    font-size: .9375rem;
+    line-height: 1.4;
+    padding: .875rem .4rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    word-break: keep-all;
+    width: 70px;
 }
 
 .btn-primary-sm:hover {
@@ -1943,7 +1930,7 @@ textarea {
   padding-left: 0.8rem;
   padding-right: 0.5rem;
   border-radius: var(--radius-sm);
-  background-color: #e2e2e2;
+  background-color: #ebebeb;
 }
 
 .option-label {
@@ -2797,13 +2784,18 @@ textarea {
 }
 
 /* ─── 드래그 손잡이 (항목 순서 변경) ──────────────────────────────────────── */
+
+ul.stack-2 {
+    padding-left: 0;
+}
+
 .drag-handle {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.25rem;
-  margin-left: -0.25rem;
+  padding:0;
+  margin-left: -8px;
   color: var(--muted-foreground);
   cursor: grab;
   touch-action: none; /* 모바일에서 드래그 중 스크롤 방지 */
@@ -2831,9 +2823,16 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
-.option-score-input {
+/* .option-score-input {
   width: 4rem;
   flex-shrink: 0;
+} */
+
+
+.option-score-input > input{
+    width: 50px;
+    padding: .875rem .4rem;
+    text-align: center;
 }
 
 .option-chip-score {
@@ -2854,4 +2853,16 @@ textarea {
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--muted-foreground);
+}
+
+.stack-15 input.field-input-inline.option-chip-score-input {
+    padding: .2rem .3rem;
+    text-align: right;
+    width: 37px;
+    height: 29px;
+    background-color: transparent;
+    border-bottom: 1px solid #a7a7a7;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #999;
 }
