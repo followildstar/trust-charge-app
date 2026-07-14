@@ -2880,3 +2880,10 @@ ul.stack-2 {
     border: none;
     border-bottom: 1px solid #999;
 }
+.habit-card select {
+    text-align: right!important;
+    text-align-last: right !important; /* Chrome 일부 */
+}
+.option {
+    text-align: right;
+}
