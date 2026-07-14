@@ -207,7 +207,7 @@ textarea {
   flex: 1 1 0%;
   min-width: 0;
   display: flex;
-  margin-left: 7px;
+  margin-left: -5px;
 }
 
 .habit-option {
@@ -216,8 +216,8 @@ textarea {
     -apple-system,
     "Noto Sans KR",
     sans-serif;
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 300;
+  font-size: 14px !important; 
   line-height: 1.4;
   margin-top: 0.25rem;
   padding-left: 0.5rem;
@@ -229,6 +229,7 @@ textarea {
   background: none;
   text-align: right;
   appearance: none;
+  letter-spacing: -0.5px;
 }
 
 .section-label {
@@ -949,6 +950,7 @@ textarea {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.75rem;
+  height: 30px;
 }
 
 .row-2 {
@@ -1547,7 +1549,7 @@ textarea {
   font-weight: 400;
   font-size: 0.625rem;
   line-height: 1;
-  color: var(--foreground);
+  color: var(--point03);
   margin-top: 0.125rem;
 }
 
@@ -1585,11 +1587,14 @@ textarea {
   color: var(--muted-foreground);
 }
 
+span.legend-label.today {
+    color: var(--point02);
+}
 .legend-dot-partial {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: var(--radius-full);
-  background-color: var(--secondary);
+  background-color: #cfcfcf;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(221, 221, 221, 0.8);
@@ -2323,7 +2328,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 1rem .7rem;
   border-radius: var(--radius-md);
   background-color: var(--card);
   transition: all var(--dur) var(--ease);
@@ -2360,7 +2365,6 @@ textarea {
     "Noto Sans KR",
     sans-serif;
   font-weight: 500;
-  font-size: 0.875rem;
   line-height: 1.4;
   display: block;
   color: var(--foreground);
@@ -2463,10 +2467,12 @@ textarea {
 }
 
 .cal-day.is-selected .cal-day-num.day-in {
-  color: #000;
-  font-weight: 900;
+    color: #fff;
+    font-weight: 400;
 }
-
+button.cal-day.is-selected .cal-day-circle {
+    background-color: #333 !important;
+}
 .cal-day-circle {
   width: 2rem;
   height: 2rem;
@@ -2476,9 +2482,9 @@ textarea {
   border-radius: var(--radius-full);
 }
 
-.cal-day-circle.is-today {
+/* .cal-day-circle.is-today {
   box-shadow: 0 0 0 2px rgba(31, 35, 40, 0.28);
-}
+} */
 
 .cal-day-num {
   font-family:
@@ -2610,6 +2616,10 @@ textarea {
 
 .cal-day-num.day-in {
   color: var(--foreground);
+}
+.cal-day-num.is-today.day-in {
+    /* font-weight: 700; */
+    color: var(--point02);
 }
 
 /* ─── 설정 화면 · 데이터 다운로드 ─────────────────────────────────────────── */
