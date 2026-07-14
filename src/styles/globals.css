@@ -1594,7 +1594,7 @@ span.legend-label.today {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: var(--radius-full);
-  background-color: #cfcfcf;
+  background-color: #e9e9e9;
   border-width: 1px;
   border-style: solid;
   border-color: rgba(221, 221, 221, 0.8);
@@ -2613,7 +2613,9 @@ button.cal-day.is-selected .cal-day-circle {
 .cal-day-num.day-out {
   color: rgba(89, 99, 110, 0.45);
 }
-
+.is-selected .cal-day-num.day-out {
+    color: #b5b5b5;
+}
 .cal-day-num.day-in {
   color: var(--foreground);
 }
