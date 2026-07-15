@@ -13,14 +13,17 @@ export function HabitCard({
   const checked = record.checked;
   const hasOptions = habit.options.length > 0;
 
-  // 배지에 표시할 점수: 옵션을 골랐으면 그 옵션 점수, 아니면 최대 가능 점수
   const selectedOpt = hasOptions
     ? habit.options.find(o => o.id === record.selectedOptionId)
     : undefined;
+
+  // 체크는 됐는데 옵션을 아직 안 고른 상태 → 옵션 선택 유도
+  const needsOption = hasOptions && checked && !selectedOpt;
+
   const displayScore = selectedOpt ? selectedOpt.score : habitMaxScore(habit);
 
   return (
-    <div className={`habit-card${checked ? " is-checked" : ""}`}>
+    <div className={`habit-card${checked ? " is-checked" : ""}${needsOption ? " needs-option" : ""}`}>
       <button
         onClick={onToggle}
         className={`habit-check${checked ? " is-checked" : ""}`}
@@ -40,11 +43,11 @@ export function HabitCard({
           value={record.selectedOptionId || ""}
           onChange={e => onSetOption(e.target.value)}
           onClick={e => e.stopPropagation()}
-          className="habit-option"
+          className={`habit-option${needsOption ? " is-attention" : ""}`}
         >
-          <option value="">옵션 선택</option>
+          <option value="">{needsOption ? "옵션을 골라주세요" : "옵션 선택"}</option>
           {habit.options.map(o => (
-            <option key={o.id} value={o.id}>{o.label}</option>
+            <option key={o.id} value={o.id}>{o.label} · {o.score}P</option>
           ))}
         </select>
       )}
