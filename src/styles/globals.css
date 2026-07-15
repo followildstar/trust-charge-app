@@ -57,7 +57,7 @@
 
   --txt_sub01: #666; /* GitHub 본문 텍스트 */
   --point01: #2e6130; /* 메인 녹색 */
-  --point02: #b6584f; /* GitHub 본문 텍스트 */
+  --point02: #db2d1c; /* GitHub 본문 텍스트 */
   --point03: #7876c1; /* GitHub 본문 텍스트 */
 
   /* Radius (GitHub: 각진 카드, 6px 근처) */
@@ -232,7 +232,9 @@ textarea {
   letter-spacing: -0.5px;
   text-align: right;
 }
-
+select.habit-option.is-attention {
+    color: var(--point02);
+}
 .section-label {
   font-family:
     "Pretendard",
@@ -2590,7 +2592,7 @@ button.cal-day.is-selected .cal-day-circle {
   background: none;
   border: none;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.5);
+  color:#777;
 }
 
 .nav-item.is-active {
