@@ -46,9 +46,12 @@ export function appReducer(state: AppState, action: Action): AppState {
       return updateActivePhase(state, phase => {
         const dayRec = phase.records[action.date] || {};
         const hr = dayRec[action.habitId] || { checked: false, selectedOptionId: "" };
+        const nextChecked = !hr.checked;
+        // 체크를 끄면 골랐던 옵션도 초기화 (다시 켤 때 옵션부터 고르도록)
+        const nextOptionId = nextChecked ? hr.selectedOptionId : "";
         return {
           ...phase,
-          records: { ...phase.records, [action.date]: { ...dayRec, [action.habitId]: { ...hr, checked: !hr.checked } } },
+          records: { ...phase.records, [action.date]: { ...dayRec, [action.habitId]: { ...hr, checked: nextChecked, selectedOptionId: nextOptionId } } },
         };
       });
 
@@ -56,9 +59,11 @@ export function appReducer(state: AppState, action: Action): AppState {
       return updateActivePhase(state, phase => {
         const dayRec = phase.records[action.date] || {};
         const hr = dayRec[action.habitId] || { checked: false, selectedOptionId: "" };
+        // 옵션을 고르면 체크도 자동으로 켜고, "옵션 선택"(빈 값)으로 되돌리면 체크도 끈다
+        const nextChecked = action.optionId !== "";
         return {
           ...phase,
-          records: { ...phase.records, [action.date]: { ...dayRec, [action.habitId]: { ...hr, selectedOptionId: action.optionId } } },
+          records: { ...phase.records, [action.date]: { ...dayRec, [action.habitId]: { ...hr, selectedOptionId: action.optionId, checked: nextChecked } } },
         };
       });
 
