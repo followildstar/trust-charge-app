@@ -67,7 +67,7 @@ export function CalendarScreen({ state, dispatch }: { state: AppState; dispatch:
             if (inRange) {
               textClass = "day-in";
               if (dayStatus.isFullDay) bg = "var(--primary)";
-              else if (dayStatus.score > activePhase.baseScore) bg = "#e9e9e9";
+              else if (dayStatus.score > 0) bg = "var(--secondary)";
             }
             return (
               <button key={ds} onClick={() => setSelectedDate(ds)} className={`cal-day${isSelected ? " is-selected" : ""}`}>
@@ -92,10 +92,6 @@ export function CalendarScreen({ state, dispatch }: { state: AppState; dispatch:
           <div className="legend-item">
             <div className="legend-dot-partial" />
             <span className="legend-label">부분</span>
-          </div>
-          <div class="legend-item">
-            <div class=""></div>
-            <span class="legend-label today">오늘</span>
           </div>
         </div>
 
