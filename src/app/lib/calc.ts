@@ -86,7 +86,9 @@ export function calcTotalProgress(phase: Phase): number {
       checkedBonusPts += habitEarnedScore(h, dayRec[h.id]);
     }
     const dayFraction = totalBasicPts > 0 ? checkedBasicPts / totalBasicPts : 0;
-    accumulated += dayFraction * perDayMax + checkedBonusPts;
+    // 보너스도 하루치 비중으로 환산해서 더한다.
+    // (매일 2P씩 전 기간 받으면 최종 +2% → 하루 점수 102%와 눈금이 맞음)
+    accumulated += dayFraction * perDayMax + checkedBonusPts / totalDays;
   }
   return parseFloat((phase.baseScore + accumulated).toFixed(2));
 }
