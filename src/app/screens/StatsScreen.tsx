@@ -13,9 +13,9 @@ export function StatsScreen({ state }: { state: AppState }) {
   const now = new Date();
   const pastDays = allDays.filter(d => !isAfter(d, now));
   const scores = pastDays.map(d => calcScore(activePhase, format(d, "yyyy-MM-dd")));
-  const nonZeroScores = scores.filter(s => s > activePhase.baseScore);
-  const avgScore = nonZeroScores.length > 0 ? nonZeroScores.reduce((a, b) => a + b, 0) / nonZeroScores.length : activePhase.baseScore;
-  const maxScore = scores.length > 0 ? Math.max(...scores) : activePhase.baseScore;
+  const nonZeroScores = scores.filter(s => s > 0);
+  const avgScore = nonZeroScores.length > 0 ? nonZeroScores.reduce((a, b) => a + b, 0) / nonZeroScores.length : 0;
+  const maxScore = scores.length > 0 ? Math.max(...scores) : 0;
   const basicHabits = activePhase.habits.filter(h => h.enabled && !h.isBonus);
   const streak = (() => {
     let s = 0;
