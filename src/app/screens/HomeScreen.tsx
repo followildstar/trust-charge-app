@@ -24,6 +24,7 @@ export function HomeScreen({
   const allDays = eachDayOfInterval({ start: parseISO(activePhase.startDate), end: parseISO(activePhase.endDate) });
   const now = new Date();
   const daysPassed = allDays.filter(d => !isAfter(d, now)).length;
+  const daysLeft = allDays.length - daysPassed;
 
   const basicHabits = activePhase.habits.filter(h => h.enabled && !h.isBonus).sort((a, b) => a.order - b.order);
   const bonusHabits = activePhase.habits.filter(h => h.enabled && h.isBonus).sort((a, b) => a.order - b.order);
@@ -59,7 +60,8 @@ export function HomeScreen({
         </div>
         <button
           onClick={onGoPhases}
-          className="phase-switch-btn">
+          className="phase-switch-btn"
+        >
           <span className="phase-indicator">{activePhase.name}</span>
           <ChevronRight size={12} className="chevron-dim" />
         </button>
@@ -69,8 +71,10 @@ export function HomeScreen({
         {/* Gauge */}
         <div className="gauge-section">
           <CircularGauge pct={totalProgress} />
+          <div className="gauge-caption">누적 자기신뢰도</div>
           <div className="gauge-days">
-            {daysPassed}일 / {allDays.length}일 경과
+            총 {allDays.length}일 중 {daysPassed}일 경과
+            {daysLeft > 0 && ` · ${daysLeft}일 남음`}
           </div>
         </div>
 
