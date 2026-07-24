@@ -71,10 +71,9 @@ export function HomeScreen({
         {/* Gauge */}
         <div className="gauge-section">
           <CircularGauge pct={totalProgress} />
-          <div className="gauge-caption">누적 자기신뢰도</div>
           <div className="gauge-days">
-            총 {allDays.length}일 중 {daysPassed}일 경과
-            {daysLeft > 0 && ` · ${daysLeft}일 남음`}
+             {/* {daysPassed}일 경과 */}
+            {daysLeft > 0 && ` · ${daysLeft}일 남음`} · 총 {allDays.length}일
           </div>
         </div>
 
