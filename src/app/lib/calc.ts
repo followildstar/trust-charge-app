@@ -56,9 +56,10 @@ export function calcScore(phase: Phase, date: string): number {
     checkedBonusPts += habitEarnedScore(h, dayRec[h.id]);
   }
 
-  const base = phase.baseScore;
-  const basicPct = totalBasicPts > 0 ? (checkedBasicPts / totalBasicPts) * (100 - base) : 0;
-  return parseFloat((base + basicPct + checkedBonusPts).toFixed(2));
+  // 오늘 점수는 그날의 순수 달성률(0~100%) + 보너스.
+  // 기본 신뢰도는 누적 게이지의 출발점으로만 쓰이고 하루 점수에는 더하지 않는다.
+  const basicPct = totalBasicPts > 0 ? (checkedBasicPts / totalBasicPts) * 100 : 0;
+  return parseFloat((basicPct + checkedBonusPts).toFixed(2));
 }
 
 export function calcTotalProgress(phase: Phase): number {
