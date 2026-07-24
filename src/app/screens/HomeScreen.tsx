@@ -73,7 +73,7 @@ export function HomeScreen({
           <CircularGauge pct={totalProgress} />
           <div className="gauge-days">
              {/* {daysPassed}일 경과 */}
-            {daysLeft > 0 && ` · ${daysLeft}일 남음`} · 총 {allDays.length}일
+            {daysLeft > 0 && `  ${daysLeft}일 남음`} · 총 {allDays.length}일
           </div>
         </div>
 
