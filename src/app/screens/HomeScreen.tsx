@@ -51,6 +51,24 @@ export function HomeScreen({
     dispatch({ type: "SET_OPTION", date: today, habitId, optionId: optId });
   }
 
+  // 퀵링크 클릭 시 이동 처리
+  // - 이미 스킴(https://, gandan:// 등)이 있으면 그대로 사용
+  // - 스킴 없이 도메인만 입력된 경우에만 https:// 자동으로 붙임
+  // - 커스텀 스킴(앱 딥링크)은 window.open이 아니라 location.href로 이동해야
+  //   iOS에서 "앱으로 열기" 팝업이 정상적으로 뜸
+  function handleOpenLink(rawUrl: string) {
+    const raw = rawUrl.trim();
+    if (!raw) return;
+
+    const href = raw.includes("://") ? raw : `https://${raw}`;
+
+    if (href.startsWith("http://") || href.startsWith("https://")) {
+      window.open(href, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.href = href;
+    }
+  }
+
   return (
     <div className="screen">
       <div className="home-header">
@@ -136,10 +154,7 @@ export function HomeScreen({
               {(activePhase.links ?? []).map(link => (
                 <button
                   key={link.id}
-                  onClick={() => {
-                    const href = link.url.startsWith("http") ? link.url : `https://${link.url}`;
-                    window.open(href, "_blank", "noopener,noreferrer");
-                  }}
+                  onClick={() => handleOpenLink(link.url)}
                   className="quicklink-btn"
                 >
                   <span className="quicklink-emoji">{link.emoji}</span>
