@@ -107,7 +107,7 @@ export function appReducer(state: AppState, action: Action): AppState {
 
     case "SET_PHASE_META":
       return updateTargetPhase(state, action.phaseId, phase => ({
-        ...phase, name: action.name, mainGoal: action.mainGoal, priority: action.priority,
+        ...phase, name: action.name, mainGoal: action.mainGoal, priority: action.priority, days: action.days,
       }));
 
     case "ADD_LINK":
@@ -140,6 +140,7 @@ export function appReducer(state: AppState, action: Action): AppState {
         ...p,
         links: p.links ?? [],
         retrospective: p.retrospective ?? EMPTY_RETRO,
+        days: p.days ?? "all",
         habits: (p.habits ?? []).map(h => ({
           ...h,
           options: (h.options ?? []).map(o => ({
