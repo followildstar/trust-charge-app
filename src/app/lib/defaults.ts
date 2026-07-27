@@ -32,6 +32,7 @@ export const DEFAULT_PHASE_1: Phase = {
   mainGoal: "매일 운동하고 규칙적인 생활 습관 들이기",
   priority: ["운동", "수면", "물 마시기", "독서"],
   baseScore: 30,
+  days: "all",
   records: {},
   retrospective: EMPTY_RETRO,
   links: [
@@ -56,6 +57,7 @@ export const DEFAULT_PHASE_2: Phase = {
   mainGoal: "일찍 일어나 나만의 루틴 완성하기",
   priority: ["기상", "운동", "독서", "저널"],
   baseScore: 30,
+  days: "all",
   records: {},
   retrospective: EMPTY_RETRO,
   links: [
