@@ -17,6 +17,7 @@ export function loadState(): AppState {
           ...p,
           links: p.links ?? [],
           retrospective: p.retrospective ?? EMPTY_RETRO,
+          days: p.days ?? "all",
           // 옵션에 score가 없던 옛 데이터는 항목 점수로 채워 NaN 방지
           habits: (p.habits ?? []).map(h => ({
             ...h,
