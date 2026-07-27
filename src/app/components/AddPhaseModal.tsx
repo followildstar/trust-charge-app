@@ -2,7 +2,7 @@ import { useState } from "react";
 import { makeId } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
 import { NumberInput } from "./NumberInput";
-import type { Phase, PhaseDays } from "../types";
+import type { Phase } from "../types";
 
 export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => void; onClose: () => void; }) {
   const [name, setName] = useState("");
@@ -11,7 +11,6 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
   const [mainGoal, setMainGoal] = useState("");
   const [priorityText, setPriorityText] = useState("");
   const [baseScore, setBaseScore] = useState(30);
-  const [days, setDays] = useState<PhaseDays>("all");
 
   function handleSave() {
     if (!name.trim() || !startDate || !endDate) return;
@@ -24,14 +23,13 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
       mainGoal: mainGoal.trim(),
       priority,
       baseScore,
-      days,
       records: {},
       retrospective: EMPTY_RETRO,
       links: [],
       habits: [
-        { id: makeId(), name: "운동", score: 5, isBonus: false, enabled: true, order: 0, options: [] },
-        { id: makeId(), name: "독서", score: 3, isBonus: false, enabled: true, order: 1, options: [] },
-        { id: makeId(), name: "물 마시기", score: 3, isBonus: false, enabled: true, order: 2, options: [] },
+        { id: makeId(), name: "러닝", score: 5, isBonus: false, enabled: true, order: 0, options: [] },
+        { id: makeId(), name: "영어", score: 5, isBonus: false, enabled: true, order: 1, options: [] },
+        { id: makeId(), name: "요가", score: 3, isBonus: false, enabled: true, order: 2, options: [] },
       ],
     };
     onSave(newPhase);
@@ -44,7 +42,7 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
         <div className="stack-4">
           <div>
             <div className="field-label">목표 이름 *</div>
-            <input className="field-input" placeholder="예: 건강한 습관 만들기" value={name} onChange={e => setName(e.target.value)} />
+            <input className="field-input" placeholder="예: 요가 완주 기간" value={name} onChange={e => setName(e.target.value)} />
           </div>
           <div className="grid2">
             <div>
@@ -58,30 +56,15 @@ export function AddPhaseModal({ onSave, onClose }: { onSave: (phase: Phase) => v
           </div>
           <div>
             <div className="field-label">주요 목표</div>
-            <input className="field-input" placeholder="예: 매일 30분 운동하기" value={mainGoal} onChange={e => setMainGoal(e.target.value)} />
+            <input className="field-input" placeholder="예: 요가 70회 완주" value={mainGoal} onChange={e => setMainGoal(e.target.value)} />
           </div>
           <div>
             <div className="field-label">우선순위 (쉼표로 구분)</div>
-            <input className="field-input" placeholder="예: 운동, 독서, 수면" value={priorityText} onChange={e => setPriorityText(e.target.value)} />
+            <input className="field-input" placeholder="예: 요가, 러닝, 피아노" value={priorityText} onChange={e => setPriorityText(e.target.value)} />
           </div>
           <div>
             <div className="field-label">기본 자기신뢰도 (%)</div>
             <NumberInput min={0} max={99} className="field-input" value={baseScore} onChange={setBaseScore} />
-          </div>
-          <div>
-            <div className="field-label">활동 요일</div>
-            <div className="segmented">
-              {([["all","매일"],["weekday","평일"],["weekend","주말"]] as const).map(([v, lb]) => (
-                <button
-                  key={v}
-                  type="button"
-                  onClick={() => setDays(v)}
-                  className={`segmented-btn${days === v ? " is-active" : ""}`}
-                >
-                  {lb}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
         <div className="modal-actions">
