@@ -7,7 +7,7 @@ import { AddPhaseModal } from "../components/AddPhaseModal";
 import { HabitEditor } from "../components/HabitEditor";
 import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
-import { getDday, getPhaseStatus, habitMaxScore } from "../lib/calc";
+import { getDday, getPhaseStatus, habitMaxScore, PHASE_DAYS_LABEL } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
 import type { Action, AppState, Habit, Phase, QuickLink, Retrospective } from "../types";
 
@@ -77,6 +77,7 @@ export function PhaseDetailScreen({
   const [startDate, setStartDate] = useState(phase.startDate);
   const [endDate, setEndDate] = useState(phase.endDate);
   const [baseScore, setBaseScore] = useState(phase.baseScore);
+  const [metaDays, setMetaDays] = useState(phase.days ?? "all");
 
   // 습관(항목) 편집 상태
   const [editHabit, setEditHabit] = useState<Partial<Habit> | null>(null);
@@ -90,6 +91,7 @@ export function PhaseDetailScreen({
     setStartDate(phase.startDate);
     setEndDate(phase.endDate);
     setBaseScore(phase.baseScore);
+    setMetaDays(phase.days ?? "all");
     setEditMeta(false);
   }, [phase.id]);
 
@@ -104,7 +106,7 @@ export function PhaseDetailScreen({
 
   function saveMeta() {
     const priority = metaPriority.split(/[,，、]/).map(s => s.trim()).filter(Boolean);
-    dispatch({ type: "SET_PHASE_META", phaseId: phase.id, name: metaName, mainGoal: metaGoal, priority });
+    dispatch({ type: "SET_PHASE_META", phaseId: phase.id, name: metaName, mainGoal: metaGoal, priority, days: metaDays });
     dispatch({ type: "SET_DATE_RANGE", phaseId: phase.id, startDate, endDate });
     dispatch({ type: "SET_BASE_SCORE", phaseId: phase.id, score: baseScore });
     setEditMeta(false);
@@ -188,12 +190,28 @@ export function PhaseDetailScreen({
                 <div className="field-label-mb1">기본 자기신뢰도 (%)</div>
                 <NumberInput min={0} max={99} className="field-input-compact" value={baseScore} onChange={setBaseScore} />
               </div>
+              <div>
+                <div className="field-label-mb1">활동 요일</div>
+                <div className="segmented">
+                  {([["all","매일"],["weekday","평일"],["weekend","주말"]] as const).map(([v, lb]) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setMetaDays(v)}
+                      className={`segmented-btn${metaDays === v ? " is-active" : ""}`}
+                    >
+                      {lb}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <button onClick={saveMeta} className="btn-primary-full-sm">저장</button>
             </div>
           ) : (
             <div className="stack-2">
               {[
                 { label: "기간", value: `${phase.startDate} ~ ${phase.endDate}` },
+                { label: "활동 요일", value: PHASE_DAYS_LABEL[phase.days ?? "all"] },
                 { label: "기본 신뢰도", value: `${phase.baseScore}%` },
                 { label: "우선순위", value: phase.priority.join(" › ") || "—" },
               ].map(item => (
