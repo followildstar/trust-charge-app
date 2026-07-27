@@ -8,7 +8,6 @@ import { isDateInRange } from "./lib/calc";
 
 import { BottomNav } from "./components/BottomNav";
 import { Toast } from "./components/Toast";
-import { Splash, shouldShowSplash } from "./components/Splash";
 import { HomeScreen } from "./screens/HomeScreen";
 import { CalendarScreen } from "./screens/CalendarScreen";
 import { StatsScreen } from "./screens/StatsScreen";
@@ -27,7 +26,6 @@ export default function App() {
   const [state, dispatch] = useReducer(appReducer, undefined, loadState);
   const [screen, setScreen] = useState<Screen>(() => getInitialScreen(loadState()));
   const [toast, setToast] = useState<string | null>(null);
-  const [showSplash, setShowSplash] = useState(() => shouldShowSplash());
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -65,7 +63,6 @@ export default function App() {
       </div>
       <BottomNav screen={screen} onNavigate={setScreen} />
       {toast && <Toast message={toast} onDone={() => setToast(null)} />}
-      {showSplash && <Splash onDone={() => setShowSplash(false)} />}
     </div>
   );
 }
