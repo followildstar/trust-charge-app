@@ -1,8 +1,24 @@
 import { differenceInCalendarDays, eachDayOfInterval, format, isAfter, isBefore, isSameDay, parseISO } from "date-fns";
-import type { Phase } from "../types";
+import type { Phase, PhaseDays } from "../types";
 
 export const makeId = () => `id-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 export const KO_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
+
+// 요일 라벨
+export const PHASE_DAYS_LABEL: Record<PhaseDays, string> = {
+  all: "매일",
+  weekday: "평일 (월~금)",
+  weekend: "주말 (토·일)",
+};
+
+// 주어진 Date가 목표의 활동 요일에 해당하는지 (토=6, 일=0)
+export function isActiveWeekday(d: Date, days: PhaseDays): boolean {
+  const wd = d.getDay();
+  const isWeekend = wd === 0 || wd === 6;
+  if (days === "weekday") return !isWeekend;
+  if (days === "weekend") return isWeekend;
+  return true; // all
+}
 
 export function toKoDateStr(dateStr: string) {
   const d = parseISO(dateStr);
@@ -12,6 +28,18 @@ export function toKoDateStr(dateStr: string) {
 export function isDateInRange(date: string, startDate: string, endDate: string): boolean {
   const d = parseISO(date);
   return !isBefore(d, parseISO(startDate)) && !isAfter(d, parseISO(endDate));
+}
+
+// 범위 안에 있고 + 활동 요일에도 해당하는 "실제 활동일"인지
+export function isActiveDate(phase: Phase, date: string): boolean {
+  if (!isDateInRange(date, phase.startDate, phase.endDate)) return false;
+  return isActiveWeekday(parseISO(date), phase.days ?? "all");
+}
+
+// 목표의 활동일 목록 (범위 내 + 요일 필터)
+export function activeDaysOf(phase: Phase): Date[] {
+  const all = eachDayOfInterval({ start: parseISO(phase.startDate), end: parseISO(phase.endDate) });
+  return all.filter(d => isActiveWeekday(d, phase.days ?? "all"));
 }
 
 // 이 항목이 하루에 받을 수 있는 최대 점수
@@ -39,7 +67,7 @@ export function habitEarnedScore(
 }
 
 export function calcScore(phase: Phase, date: string): number {
-  if (!isDateInRange(date, phase.startDate, phase.endDate)) return 0;
+  if (!isActiveDate(phase, date)) return 0;
   const dayRec = phase.records[date] || {};
   const basicHabits = phase.habits.filter(h => h.enabled && !h.isBonus);
   const bonusHabits = phase.habits.filter(h => h.enabled && h.isBonus);
@@ -64,10 +92,9 @@ export function calcScore(phase: Phase, date: string): number {
 
 export function calcTotalProgress(phase: Phase): number {
   const today = new Date();
-  const start = parseISO(phase.startDate);
-  const end = parseISO(phase.endDate);
-  const allDays = eachDayOfInterval({ start, end });
+  const allDays = activeDaysOf(phase);
   const totalDays = allDays.length;
+  if (totalDays === 0) return phase.baseScore;
   const perDayMax = (100 - phase.baseScore) / totalDays;
 
   let accumulated = 0;
@@ -108,7 +135,7 @@ export function getDayStatus(phase: Phase, date: string): DayStatus {
   const isToday = isSameDay(d, now);
   const isPast = isBefore(d, now) && !isToday;
   const isFuture = isAfter(d, now);
-  if (!isDateInRange(date, phase.startDate, phase.endDate)) {
+  if (!isActiveDate(phase, date)) {
     return { score: 0, isFullDay: false, isPast, isToday, isFuture };
   }
   const score = (isPast || isToday) ? calcScore(phase, date) : 0;
