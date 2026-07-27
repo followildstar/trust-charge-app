@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ㅂㅂ═══════════════════════════════════════════════════════════════════════════
    TRUST CHARGE — globals.css
    GitHub 웹사이트 디자인 언어 기반 (흰 배경, #ddd 보더, 각진 카드, 여백 넉넉)
    메인 컬러 #2e6130 (녹색) · 게이지 컬러/애니메이션은 유지
@@ -2909,4 +2909,94 @@ ul.stack-2 {
 }
 .option {
     text-align: right;
+}
+
+
+
+/* ─── 옵션 선택 유도 (체크됐지만 옵션 미선택) ────────────────────────────── */
+.habit-option.is-attention {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+  background-color: rgba(46, 97, 48, 0.06);
+}
+
+.habit-card.needs-option {
+  border-color: var(--primary);
+}
+
+/* ─── 세그먼트 선택 (활동 요일: 매일/평일/주말) ──────────────────────────── */
+.segmented {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background-color: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.segmented-btn {
+  flex: 1 1 0%;
+  padding: 0.5rem 0.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--muted-foreground);
+  font-family: "Pretendard", -apple-system, "Noto Sans KR", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.segmented-btn.is-active {
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   새로 추가된 스타일 (스플래시 화면)
+   앱 시작 시 하루 한 번 표시 · 페이드인 → 유지 → 페이드아웃 (약 1.8초)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  animation: splash-fade-in 0.5s var(--ease);
+  opacity: 1;
+  transition: opacity 0.4s var(--ease);
+}
+.splash.is-out {
+  opacity: 0;
+}
+.splash-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  animation: splash-rise 0.7s var(--ease);
+}
+.splash-name {
+  font-family: "Pretendard", -apple-system, "Noto Sans KR", sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+.splash-tagline {
+  font-family: "Pretendard", -apple-system, "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  color: var(--muted-foreground);
+}
+@keyframes splash-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes splash-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
