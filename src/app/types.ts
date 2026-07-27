@@ -9,6 +9,8 @@ export type DayRecord = Record<string, HabitRecord>;
 export interface QuickLink { id: string; emoji: string; name: string; url: string; }
 export interface Retrospective { bestPoint: string; hardPoint: string; nextReflection: string; }
 
+export type PhaseDays = "all" | "weekday" | "weekend";
+
 export interface Phase {
   id: string;
   name: string;
@@ -19,6 +21,7 @@ export interface Phase {
   habits: Habit[];
   records: Record<string, DayRecord>;
   baseScore: number;
+  days: PhaseDays;
   links: QuickLink[];
   retrospective: Retrospective;
 }
@@ -44,7 +47,7 @@ export type Action =
   | { type: "REORDER_HABITS"; isBonus: boolean; orderedIds: string[]; phaseId?: string }
   | { type: "SET_DATE_RANGE"; startDate: string; endDate: string; phaseId?: string }
   | { type: "SET_BASE_SCORE"; score: number; phaseId?: string }
-  | { type: "SET_PHASE_META"; name: string; mainGoal: string; priority: string[]; phaseId?: string }
+  | { type: "SET_PHASE_META"; name: string; mainGoal: string; priority: string[]; days: PhaseDays; phaseId?: string }
   | { type: "ADD_LINK"; phaseId: string; link: QuickLink }
   | { type: "UPDATE_LINK"; phaseId: string; link: QuickLink }
   | { type: "DELETE_LINK"; phaseId: string; linkId: string }
