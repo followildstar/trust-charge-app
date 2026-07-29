@@ -3015,6 +3015,7 @@ background-color: var(--point03);
     display: flex;
     width: 100%;
     justify-content: space-between;
+       padding-bottom: 10px;
 }
 .link-meta {
     display: flex;
@@ -3043,4 +3044,15 @@ background-color: var(--point03);
   padding: .4rem .3rem;
   color: var(--foreground);
   outline: none;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+span.info-label {
+    font-size: 13px;
+    color: #444;
 }
