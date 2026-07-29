@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import type * as React from "react";
 import { Reorder, useDragControls } from "motion/react";
-import { ArrowLeft, ChevronRight, Edit2, ExternalLink, GripVertical, Link2, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, ChevronRight, Edit2, ExternalLink, GripVertical, Link2, Plus, Trash2, Check } from "lucide-react";
 import { AddLinkModal } from "../components/AddLinkModal";
 import { AddPhaseModal } from "../components/AddPhaseModal";
 import { HabitEditor } from "../components/HabitEditor";
 import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
+import { Toast } from "../components/Toast";
 import { getDday, getPhaseStatus, habitMaxScore, PHASE_DAYS_LABEL } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
-import type { Action, AppState, Habit, Phase, QuickLink, Retrospective } from "../types";
+import type { Action, AppState, Habit, Phase, PhaseDays, QuickLink, Retrospective } from "../types";
 
 // 드래그로 순서를 바꿀 수 있는 습관 행 (손잡이만 드래그 트리거)
 function DraggableHabitRow({
@@ -47,7 +48,7 @@ function DraggableHabitRow({
 }
 
 export function PhaseDetailScreen({
-  phase, isActive, phaseCount, dispatch, onBack, onActivate,
+  phase, isActive, phaseCount, dispatch, onBack, onActivate, onToast,
 }: {
   phase: Phase;
   isActive: boolean;
@@ -55,6 +56,7 @@ export function PhaseDetailScreen({
   dispatch: React.Dispatch<Action>;
   onBack: () => void;
   onActivate: () => void;
+  onToast: (msg: string) => void;
 }) {
   const status = getPhaseStatus(phase);
   const isCompleted = status === "completed";
@@ -104,6 +106,22 @@ export function PhaseDetailScreen({
     setTimeout(() => setRetroSaved(false), 1800);
   }
 
+  function handleMetaDaysClick(selectedDay: PhaseDays) {
+    if (metaDays === selectedDay) {
+      setMetaDays(selectedDay);
+      return;
+    }
+
+    if (metaDays !== "all") {
+      const currentLabel = metaDays === "weekday" ? "평일" : "주말";
+      const nextLabel = selectedDay === "weekday" ? "평일" : "주말";
+      onToast(`${currentLabel}과 ${nextLabel}을 함께 선택할 수 없어요.`);
+      return;
+    }
+
+    setMetaDays(selectedDay);
+  }
+
   function saveMeta() {
     const priority = metaPriority.split(/[,，、]/).map(s => s.trim()).filter(Boolean);
     dispatch({ type: "SET_PHASE_META", phaseId: phase.id, name: metaName, mainGoal: metaGoal, priority, days: metaDays });
@@ -111,6 +129,9 @@ export function PhaseDetailScreen({
     dispatch({ type: "SET_BASE_SCORE", phaseId: phase.id, score: baseScore });
     setEditMeta(false);
   }
+
+  const isWeekdayDisabled = metaDays === "weekend";
+  const isWeekendDisabled = metaDays === "weekday";
 
   return (
     <div className="screen">
@@ -193,16 +214,29 @@ export function PhaseDetailScreen({
               <div>
                 <div className="field-label-mb1">활동 요일</div>
                 <div className="segmented">
-                  {([["all","매일"],["weekday","평일"],["weekend","주말"]] as const).map(([v, lb]) => (
-                    <button
-                      key={v}
-                      type="button"
-                      onClick={() => setMetaDays(v)}
-                      className={`segmented-btn${metaDays === v ? " is-active" : ""}`}
-                    >
-                      {lb}
-                    </button>
-                  ))}
+                  <button
+                    type="button"
+                    onClick={() => handleMetaDaysClick("all")}
+                    className={`segmented-btn${metaDays === "all" ? " is-active" : ""}`}
+                  >
+                    매일
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleMetaDaysClick("weekday")}
+                    disabled={isWeekdayDisabled}
+                    className={`segmented-btn${metaDays === "weekday" ? " is-active" : ""}${isWeekdayDisabled ? " is-disabled" : ""}`}
+                  >
+                    평일
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleMetaDaysClick("weekend")}
+                    disabled={isWeekendDisabled}
+                    className={`segmented-btn${metaDays === "weekend" ? " is-active" : ""}${isWeekendDisabled ? " is-disabled" : ""}`}
+                  >
+                    주말
+                  </button>
                 </div>
               </div>
               <button onClick={saveMeta} className="btn-primary-full-sm">저장</button>
@@ -213,140 +247,134 @@ export function PhaseDetailScreen({
                 { label: "기간", value: `${phase.startDate} ~ ${phase.endDate}` },
                 { label: "활동 요일", value: PHASE_DAYS_LABEL[phase.days ?? "all"] },
                 { label: "기본 신뢰도", value: `${phase.baseScore}%` },
-                { label: "우선순위", value: phase.priority.join(" › ") || "—" },
-              ].map(item => (
-                <div key={item.label} className="settings-info-row">
-                  <span className="settings-pts">{item.label}</span>
-                  <span className="settings-info-value">{item.value}</span>
+              ].map((item, i) => (
+                <div key={i} className="info-row">
+                  <span className="info-label">{item.label}</span>
+                  <span className="info-value">{item.value}</span>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* 기본 항목 */}
-        <div>
-          <div className="card-title-mb3">기본 항목</div>
-          <Reorder.Group
-            axis="y"
-            values={basicHabits}
-            onReorder={next => dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: false, orderedIds: next.map(h => h.id) })}
-            className="stack-2"
-          >
-            {basicHabits.map(h => (
-              <DraggableHabitRow
-                key={h.id}
-                habit={h}
-                onEdit={() => setEditHabit(h)}
-                onDelete={() => setDeleteHabitId(h.id)}
-              />
-            ))}
-          </Reorder.Group>
-          <button onClick={() => setEditHabit({ isBonus: false, order: basicHabits.length })} className="btn-add">
-            <Plus size={14} /> 기본 항목 추가
-          </button>
-        </div>
-
-        {/* 보너스 항목 */}
-        <div>
-          <div className="card-title-mb3">보너스 항목</div>
-          <Reorder.Group
-            axis="y"
-            values={bonusHabits}
-            onReorder={next => dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: true, orderedIds: next.map(h => h.id) })}
-            className="stack-2"
-          >
-            {bonusHabits.map(h => (
-              <DraggableHabitRow
-                key={h.id}
-                habit={h}
-                onEdit={() => setEditHabit(h)}
-                onDelete={() => setDeleteHabitId(h.id)}
-              />
-            ))}
-          </Reorder.Group>
-          <button onClick={() => setEditHabit({ isBonus: true, order: bonusHabits.length })} className="btn-add">
-            <Plus size={14} /> 보너스 항목 추가
-          </button>
-        </div>
-
-        {/* Quick links */}
-        <div>
-          <div className="row-between-mb3">
-            <div className="row-2">
-              <Link2 size={14} className="icon-muted" />
-              <span className="phase-section">빠른 링크</span>
-            </div>
-            {links.length < 8 && (
-              <button
-                onClick={() => setEditLinkData("new")}
-                className="btn-link"
-              >
-                <Plus size={13} /> 추가
+        {/* Habits */}
+        {basicHabits.length > 0 && (
+          <div className="card-pad">
+            <div className="cal-month-nav">
+              <div className="row-2">
+                <span className="card-title">기본 항목</span>
+              </div>
+              <button onClick={() => setEditHabit({})} className="btn-link">
+                <Plus size={13} />추가
               </button>
-            )}
+            </div>
+            <Reorder.Group axis="y" values={basicHabits} onReorder={newOrder => {
+              const ids = newOrder.map(h => h.id);
+              dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: false, orderedIds: ids });
+            }} className="stack-2">
+              {basicHabits.map(h => (
+                <DraggableHabitRow
+                  key={h.id}
+                  habit={h}
+                  onEdit={() => setEditHabit(h)}
+                  onDelete={() => setDeleteHabitId(h.id)}
+                />
+              ))}
+            </Reorder.Group>
           </div>
+        )}
 
-          {links.length === 0 ? (
-            <button
-              onClick={() => setEditLinkData("new")}
-              className="btn-add-lg"
-            >
-              <Plus size={15} /> 링크 추가하기
+        {bonusHabits.length > 0 && (
+          <div className="card-pad">
+            <div className="cal-month-nav">
+              <div className="row-2">
+                <span className="card-title">보너스</span>
+              </div>
+              <button onClick={() => setEditHabit({ isBonus: true })} className="btn-link">
+                <Plus size={13} />추가
+              </button>
+            </div>
+            <Reorder.Group axis="y" values={bonusHabits} onReorder={newOrder => {
+              const ids = newOrder.map(h => h.id);
+              dispatch({ type: "REORDER_HABITS", phaseId: phase.id, isBonus: true, orderedIds: ids });
+            }} className="stack-2">
+              {bonusHabits.map(h => (
+                <DraggableHabitRow
+                  key={h.id}
+                  habit={h}
+                  onEdit={() => setEditHabit(h)}
+                  onDelete={() => setDeleteHabitId(h.id)}
+                />
+              ))}
+            </Reorder.Group>
+          </div>
+        )}
+
+        {basicHabits.length === 0 && bonusHabits.length === 0 && (
+          <div className="card-pad">
+            <button onClick={() => setEditHabit({})} className="btn-primary-full-sm">
+              <Plus size={14} /> 첫 항목 추가
             </button>
-          ) : (
+          </div>
+        )}
+
+        {/* Links */}
+        <div className="card-pad">
+          <div className="cal-month-nav">
+            <div className="row-2">
+              <span className="card-title">빠른 링크</span>
+            </div>
+            <button onClick={() => setEditLinkData("new")} className="btn-link">
+              <Plus size={13} />추가
+            </button>
+          </div>
+          {links.length > 0 ? (
             <div className="stack-2">
               {links.map(link => (
-                <div key={link.id} className="list-row">
-                  <span className="link-emoji">{link.emoji}</span>
-                  <button
-                    className="link-body"
-                    onClick={() => {
-                      const href = link.url.startsWith("http") ? link.url : `https://${link.url}`;
-                      window.open(href, "_blank", "noopener,noreferrer");
-                    }}
-                  >
+                <div key={link.id} className="link-item">
+                  <div className="link-meta">
+                    <span className="link-emoji">{link.emoji}</span>
                     <span className="link-name">{link.name}</span>
-                    <span className="link-url">{link.url}</span>
-                  </button>
-                  <ExternalLink size={14} className="link-ext-icon" />
-                  <button onClick={() => setEditLinkData(link)} className="icon-btn-a">
-                    <Edit2 size={13} />
-                  </button>
-                  <button onClick={() => setDeleteLinkId(link.id)} className="icon-btn-b">
-                    <Trash2 size={13} />
-                  </button>
+                  </div>
+                  <div className="link-actions">
+                    <button onClick={() => setEditLinkData(link)} className="icon-btn-edit">
+                      <Edit2 size={13} />
+                    </button>
+                    <button onClick={() => setDeleteLinkId(link.id)} className="icon-btn-del">
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
                 </div>
               ))}
+            </div>
+          ) : (
+            <div className="empty-card">
+              <div className="empty-msg-faint">아직 추가된 링크가 없어요</div>
             </div>
           )}
         </div>
 
         {/* Retrospective */}
-        <div>
-          <div className="row-2-mb3">
-            <span className="phase-section">회고 메모</span>
-            {!isCompleted && (
-              <span className="phase-badge-muted">
-                완료 후 작성
-              </span>
-            )}
+        <div className="card-pad">
+          <div className="cal-month-nav">
+            <div className="row-2">
+              <span className="card-title">회고</span>
+            </div>
           </div>
-
           {isCompleted ? (
-            <div className="card-stack4">
-              {([
-                { key: "bestPoint" as const, label: "🏆 가장 잘한 점", placeholder: "이 기간 동안 가장 잘했다고 생각하는 것은?" },
-                { key: "hardPoint" as const, label: "😤 어려웠던 점", placeholder: "가장 힘들었던 순간이나 상황은?" },
-                { key: "nextReflection" as const, label: "💡 다음에 반영할 것", placeholder: "다음 목표에 적용하고 싶은 교훈은?" },
-              ]).map(({ key, label, placeholder }) => (
+            <div className="stack-3">
+              {[
+                { key: "bestPoint", label: "가장 잘한 점", placeholder: "예: 매일 운동을 빠지지 않았어요" },
+                { key: "hardPoint", label: "가장 어려웠던 점", placeholder: "예: 저녁 시간 관리가 힘들었어요" },
+                { key: "nextReflection", label: "다음에 시도할 것", placeholder: "예: 더 일찍 시작하기" },
+              ].map(({ key, label, placeholder }) => (
                 <div key={key}>
                   <div className="field-label-fg">{label}</div>
                   <textarea
                     rows={3}
                     className="field-textarea"
                     placeholder={placeholder}
-                    value={retroDraft[key]}
+                    value={retroDraft[key as keyof Retrospective]}
                     onChange={e => setRetroDraft(prev => ({ ...prev, [key]: e.target.value }))}
                   />
                 </div>
@@ -470,87 +498,116 @@ export function PhaseScreen({
 }) {
   const [showAdd, setShowAdd] = useState(false);
   const [detailPhaseId, setDetailPhaseId] = useState<string | null>(null);
+  const [toastMsg, setToastMsg] = useState("");
 
   const activePhase = state.phases.find(p => p.id === state.activePhaseId)!;
   const otherPhases = state.phases.filter(p => p.id !== state.activePhaseId);
   const upcomingOther = otherPhases.filter(p => getPhaseStatus(p) !== "completed");
   const completedOther = otherPhases.filter(p => getPhaseStatus(p) === "completed");
 
+  const handleToast = (msg: string) => {
+    setToastMsg(msg);
+  };
+
+  const handleToastDone = () => {
+    setToastMsg("");
+  };
+
   // Show detail screen
   if (detailPhaseId) {
     const detailPhase = state.phases.find(p => p.id === detailPhaseId);
     if (detailPhase) {
       return (
-        <PhaseDetailScreen
-          phase={detailPhase}
-          isActive={detailPhase.id === state.activePhaseId}
-          phaseCount={state.phases.length}
-          dispatch={dispatch}
-          onBack={() => setDetailPhaseId(null)}
-          onActivate={() => {
-            dispatch({ type: "SET_ACTIVE_PHASE", phaseId: detailPhase.id });
-            onGoHome();
-          }}
-        />
+        <>
+          <PhaseDetailScreen
+            phase={detailPhase}
+            isActive={detailPhase.id === state.activePhaseId}
+            phaseCount={state.phases.length}
+            dispatch={dispatch}
+            onBack={() => setDetailPhaseId(null)}
+            onActivate={() => {
+              dispatch({ type: "SET_ACTIVE_PHASE", phaseId: detailPhase.id });
+              onGoHome();
+            }}
+            onToast={handleToast}
+          />
+          {toastMsg && (
+            <Toast
+              message={toastMsg}
+              onDone={handleToastDone}
+            />
+          )}
+        </>
       );
     }
   }
 
   return (
-    <div className="screen">
-      <div className="screen-header">
-        <div className="screen-title">목표</div>
-      </div>
+    <>
+      <div className="screen">
+        <div className="screen-header">
+          <div className="screen-title">목표</div>
+        </div>
 
-      <div className="screen-body-stack6">
-        {/* Active hero */}
-        {activePhase && (
-          <div>
-            {/* <div className="phase-section-mb3">현재 진행</div> */}
-            <PhaseHeroCard phase={activePhase} onOpenDetail={() => setDetailPhaseId(activePhase.id)} />
-          </div>
-        )}
-
-        {/* Upcoming */}
-        {upcomingOther.length > 0 && (
-          <div>
-            <div className="phase-section-mb3">예정된 목표</div>
-            <div className="stack-3">
-              {upcomingOther.map(phase => (
-                <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
-              ))}
+        <div className="screen-body-stack6">
+          {/* Active hero */}
+          {activePhase && (
+            <div>
+              {/* <div className="phase-section-mb3">현재 진행</div> */}
+              <PhaseHeroCard phase={activePhase} onOpenDetail={() => setDetailPhaseId(activePhase.id)} />
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Completed */}
-        {completedOther.length > 0 && (
-          <div>
-            <div className="phase-section-mb3">완료된 목표</div>
-            <div className="stack-3">
-              {completedOther.map(phase => (
-                <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
-              ))}
+          {/* Upcoming */}
+          {upcomingOther.length > 0 && (
+            <div>
+              <div className="phase-section-mb3">예정된 목표</div>
+              <div className="stack-3">
+                {upcomingOther.map(phase => (
+                  <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Completed */}
+          {completedOther.length > 0 && (
+            <div>
+              <div className="phase-section-mb3">완료된 목표</div>
+              <div className="stack-3">
+                {completedOther.map(phase => (
+                  <PhaseSmallCard key={phase.id} phase={phase} onOpenDetail={() => setDetailPhaseId(phase.id)} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Add new */}
+          <button
+            onClick={() => setShowAdd(true)}
+            className="btn-add-lg"
+          >
+            <Plus size={16} />
+            새 목표 추가
+          </button>
+        </div>
+
+        {showAdd && (
+          <AddPhaseModal
+            onClose={() => setShowAdd(false)}
+            onSave={phase => { dispatch({ type: "ADD_PHASE", phase }); setShowAdd(false); }}
+            onToast={handleToast}
+          />
         )}
-
-        {/* Add new */}
-        <button
-          onClick={() => setShowAdd(true)}
-          className="btn-add-lg"
-        >
-          <Plus size={16} />
-          새 목표 추가
-        </button>
       </div>
-
-      {showAdd && (
-        <AddPhaseModal
-          onClose={() => setShowAdd(false)}
-          onSave={phase => { dispatch({ type: "ADD_PHASE", phase }); setShowAdd(false); }}
+      
+      {/* Toast */}
+      {toastMsg && (
+        <Toast
+          message={toastMsg}
+          onDone={handleToastDone}
         />
       )}
-    </div>
+    </>
   );
 }
