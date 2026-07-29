@@ -2960,8 +2960,8 @@ ul.stack-2 {
 }
 .segmented-btn.is-active {
 background-color: var(--point03);
-  color: #FFF;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    color: #fFF;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.09);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -2971,7 +2971,7 @@ background-color: var(--point03);
 .splash {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 1000000;
   display: flex;
   align-items: center;
   justify-content: center;
