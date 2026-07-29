@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import type * as React from "react";
 import { Reorder, useDragControls } from "motion/react";
-import { ArrowLeft, ChevronRight, Edit2, ExternalLink, GripVertical, Link2, Plus, Trash2, Check } from "lucide-react";
+import { ArrowLeft, ChevronRight, Edit2, ExternalLink, GripVertical, Link2, Plus, Trash2 } from "lucide-react";
 import { AddLinkModal } from "../components/AddLinkModal";
 import { AddPhaseModal } from "../components/AddPhaseModal";
 import { HabitEditor } from "../components/HabitEditor";
 import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
-import { Toast } from "../components/Toast";
 import { getDday, getPhaseStatus, habitMaxScore, PHASE_DAYS_LABEL } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
 import type { Action, AppState, Habit, Phase, PhaseDays, QuickLink, Retrospective } from "../types";
@@ -490,61 +489,44 @@ export function PhaseDetailScreen({
 }
 
 export function PhaseScreen({
-  state, dispatch, onGoHome,
+  state, dispatch, onGoHome, onToast,
 }: {
   state: AppState;
   dispatch: React.Dispatch<Action>;
   onGoHome: () => void;
+  onToast: (msg: string) => void;
 }) {
   const [showAdd, setShowAdd] = useState(false);
   const [detailPhaseId, setDetailPhaseId] = useState<string | null>(null);
-  const [toastMsg, setToastMsg] = useState("");
 
   const activePhase = state.phases.find(p => p.id === state.activePhaseId)!;
   const otherPhases = state.phases.filter(p => p.id !== state.activePhaseId);
   const upcomingOther = otherPhases.filter(p => getPhaseStatus(p) !== "completed");
   const completedOther = otherPhases.filter(p => getPhaseStatus(p) === "completed");
 
-  const handleToast = (msg: string) => {
-    setToastMsg(msg);
-  };
-
-  const handleToastDone = () => {
-    setToastMsg("");
-  };
-
   // Show detail screen
   if (detailPhaseId) {
     const detailPhase = state.phases.find(p => p.id === detailPhaseId);
     if (detailPhase) {
       return (
-        <>
-          <PhaseDetailScreen
-            phase={detailPhase}
-            isActive={detailPhase.id === state.activePhaseId}
-            phaseCount={state.phases.length}
-            dispatch={dispatch}
-            onBack={() => setDetailPhaseId(null)}
-            onActivate={() => {
-              dispatch({ type: "SET_ACTIVE_PHASE", phaseId: detailPhase.id });
-              onGoHome();
-            }}
-            onToast={handleToast}
-          />
-          {toastMsg && (
-            <Toast
-              message={toastMsg}
-              onDone={handleToastDone}
-            />
-          )}
-        </>
+        <PhaseDetailScreen
+          phase={detailPhase}
+          isActive={detailPhase.id === state.activePhaseId}
+          phaseCount={state.phases.length}
+          dispatch={dispatch}
+          onBack={() => setDetailPhaseId(null)}
+          onActivate={() => {
+            dispatch({ type: "SET_ACTIVE_PHASE", phaseId: detailPhase.id });
+            onGoHome();
+          }}
+          onToast={onToast}
+        />
       );
     }
   }
 
   return (
-    <>
-      <div className="screen">
+    <div className="screen">
         <div className="screen-header">
           <div className="screen-title">목표</div>
         </div>
@@ -596,18 +578,9 @@ export function PhaseScreen({
           <AddPhaseModal
             onClose={() => setShowAdd(false)}
             onSave={phase => { dispatch({ type: "ADD_PHASE", phase }); setShowAdd(false); }}
-            onToast={handleToast}
+            onToast={onToast}
           />
         )}
       </div>
-      
-      {/* Toast */}
-      {toastMsg && (
-        <Toast
-          message={toastMsg}
-          onDone={handleToastDone}
-        />
-      )}
-    </>
   );
 }
