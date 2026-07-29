@@ -2649,6 +2649,17 @@ button.cal-day.is-selected .cal-day-circle {
     color: var(--point02);
 }
 
+/* 목표의 활동 요일이 아닌 날짜 (예: 주말 목표에서의 평일) */
+.cal-day.is-inactive {
+  cursor: not-allowed;
+}
+.cal-day-num.day-inactive {
+  color: rgba(89, 99, 110, 0.25);
+}
+.is-selected .cal-day-num.day-inactive {
+  color: #d0d0d0;
+}
+
 /* ─── 설정 화면 · 데이터 다운로드 ─────────────────────────────────────────── */
 .settings-desc {
   font-family:
@@ -2948,8 +2959,8 @@ ul.stack-2 {
   transition: all var(--dur) var(--ease);
 }
 .segmented-btn.is-active {
-  background-color: var(--card);
-  color: var(--foreground);
+background-color: var(--point03);
+  color: #FFF;
   box-shadow: 0 1px 2px rgba(0,0,0,0.06);
 }
 
