@@ -9,7 +9,7 @@ import { NumberInput } from "../components/NumberInput";
 import { PhaseHeroCard, PhaseSmallCard } from "../components/PhaseCards";
 import { getDday, getPhaseStatus, habitMaxScore, PHASE_DAYS_LABEL } from "../lib/calc";
 import { EMPTY_RETRO } from "../lib/defaults";
-import type { Action, AppState, Habit, Phase, PhaseDays, QuickLink, Retrospective } from "../types";
+import type { Action, AppState, Habit, Phase, QuickLink, Retrospective } from "../types";
 
 // 드래그로 순서를 바꿀 수 있는 습관 행 (손잡이만 드래그 트리거)
 function DraggableHabitRow({
@@ -47,7 +47,7 @@ function DraggableHabitRow({
 }
 
 export function PhaseDetailScreen({
-  phase, isActive, phaseCount, dispatch, onBack, onActivate, onToast,
+  phase, isActive, phaseCount, dispatch, onBack, onActivate,
 }: {
   phase: Phase;
   isActive: boolean;
@@ -55,7 +55,6 @@ export function PhaseDetailScreen({
   dispatch: React.Dispatch<Action>;
   onBack: () => void;
   onActivate: () => void;
-  onToast: (msg: string) => void;
 }) {
   const status = getPhaseStatus(phase);
   const isCompleted = status === "completed";
@@ -105,22 +104,6 @@ export function PhaseDetailScreen({
     setTimeout(() => setRetroSaved(false), 1800);
   }
 
-  function handleMetaDaysClick(selectedDay: PhaseDays) {
-    if (metaDays === selectedDay) {
-      setMetaDays(selectedDay);
-      return;
-    }
-
-    if (metaDays !== "all") {
-      const currentLabel = metaDays === "weekday" ? "평일" : "주말";
-      const nextLabel = selectedDay === "weekday" ? "평일" : "주말";
-      onToast(`${currentLabel}과 ${nextLabel}을 함께 선택할 수 없어요.`);
-      return;
-    }
-
-    setMetaDays(selectedDay);
-  }
-
   function saveMeta() {
     const priority = metaPriority.split(/[,，、]/).map(s => s.trim()).filter(Boolean);
     dispatch({ type: "SET_PHASE_META", phaseId: phase.id, name: metaName, mainGoal: metaGoal, priority, days: metaDays });
@@ -128,9 +111,6 @@ export function PhaseDetailScreen({
     dispatch({ type: "SET_BASE_SCORE", phaseId: phase.id, score: baseScore });
     setEditMeta(false);
   }
-
-  const isWeekdayDisabled = metaDays === "weekend";
-  const isWeekendDisabled = metaDays === "weekday";
 
   return (
     <div className="screen">
@@ -213,29 +193,16 @@ export function PhaseDetailScreen({
               <div>
                 <div className="field-label-mb1">활동 요일</div>
                 <div className="segmented">
-                  <button
-                    type="button"
-                    onClick={() => handleMetaDaysClick("all")}
-                    className={`segmented-btn${metaDays === "all" ? " is-active" : ""}`}
-                  >
-                    매일
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleMetaDaysClick("weekday")}
-                    disabled={isWeekdayDisabled}
-                    className={`segmented-btn${metaDays === "weekday" ? " is-active" : ""}${isWeekdayDisabled ? " is-disabled" : ""}`}
-                  >
-                    평일
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleMetaDaysClick("weekend")}
-                    disabled={isWeekendDisabled}
-                    className={`segmented-btn${metaDays === "weekend" ? " is-active" : ""}${isWeekendDisabled ? " is-disabled" : ""}`}
-                  >
-                    주말
-                  </button>
+                  {([["all","매일"],["weekday","평일"],["weekend","주말"]] as const).map(([v, lb]) => (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setMetaDays(v)}
+                      className={`segmented-btn${metaDays === v ? " is-active" : ""}`}
+                    >
+                      {lb}
+                    </button>
+                  ))}
                 </div>
               </div>
               <button onClick={saveMeta} className="btn-primary-full-sm">저장</button>
@@ -489,12 +456,11 @@ export function PhaseDetailScreen({
 }
 
 export function PhaseScreen({
-  state, dispatch, onGoHome, onToast,
+  state, dispatch, onGoHome,
 }: {
   state: AppState;
   dispatch: React.Dispatch<Action>;
   onGoHome: () => void;
-  onToast: (msg: string) => void;
 }) {
   const [showAdd, setShowAdd] = useState(false);
   const [detailPhaseId, setDetailPhaseId] = useState<string | null>(null);
@@ -519,7 +485,6 @@ export function PhaseScreen({
             dispatch({ type: "SET_ACTIVE_PHASE", phaseId: detailPhase.id });
             onGoHome();
           }}
-          onToast={onToast}
         />
       );
     }
@@ -578,7 +543,6 @@ export function PhaseScreen({
           <AddPhaseModal
             onClose={() => setShowAdd(false)}
             onSave={phase => { dispatch({ type: "ADD_PHASE", phase }); setShowAdd(false); }}
-            onToast={onToast}
           />
         )}
       </div>
