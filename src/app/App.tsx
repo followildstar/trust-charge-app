@@ -51,7 +51,7 @@ export default function App() {
         {screen === "home" && <HomeScreen state={safeState} dispatch={dispatch} onGoPhases={() => setScreen("phases")} onToast={setToast} />}
         {screen === "calendar" && <CalendarScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
         {screen === "stats" && <StatsScreen state={safeState} />}
-        {screen === "phases" && <PhaseScreen state={safeState} dispatch={dispatch} onGoHome={() => setScreen("home")} onToast={setToast} />}
+        {screen === "phases" && <PhaseScreen state={safeState} dispatch={dispatch} onGoHome={() => setScreen("home")} />}
         {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
       </div>
       <BottomNav screen={screen} onNavigate={setScreen} />
