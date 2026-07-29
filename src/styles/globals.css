@@ -1013,7 +1013,7 @@ select.habit-option.is-attention {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background-color: var(--card);
+  background-color: #fff;
 
   border-radius: var(--radius-md);
   padding-left: 1rem;
@@ -1655,6 +1655,7 @@ span.legend-label.today {
 }
 
 .card-pad {
+       background-color:  var(--card);
   border-radius: var(--radius-lg);
   padding: 1rem;
 }
