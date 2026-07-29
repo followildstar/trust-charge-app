@@ -1655,7 +1655,6 @@ span.legend-label.today {
 }
 
 .card-pad {
-  background-color: var(--card);
   border-radius: var(--radius-lg);
   padding: 1rem;
 }
@@ -3010,4 +3009,38 @@ background-color: var(--point03);
 @keyframes splash-rise {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+/* 빠른링크 수정 */
+.link-item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.link-meta {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.grid2-gap2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.grid2-gap2 > div {
+  min-width: 0;
+}
+
+.field-input-tight {
+  font-family: Pretendard, -apple-system, Noto Sans KR, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: var(--radius-sm);
+  padding: .4rem .3rem;
+  color: var(--foreground);
+  outline: none;
 }
