@@ -24,9 +24,24 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>(() => getInitialScreen(loadState()));
   const [toast, setToast] = useState<string | null>(null);
   const [showSplash, setShowSplash] = useState(() => shouldShowSplash());
+  // 홈 화면의 "목표 수정" 메뉴에서 특정 목표의 상세(편집) 화면으로 바로 이동할 때 사용
+  const [targetPhaseId, setTargetPhaseId] = useState<string | null>(null);
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
+
+  // 일반 탭 이동(바텀 네비 등): 목표 상세 딥링크는 초기화
+  function navigateTo(next: Screen) {
+    setTargetPhaseId(null);
+    setScreen(next);
+  }
+
+  // 홈 화면에서 특정 목표의 상세(편집) 화면으로 바로 이동
+  function goToPhaseDetail(phaseId: string) {
+    setTargetPhaseId(phaseId);
+    setScreen("phases");
+  }
+
   const activePhase = state.phases.find(p => p.id === state.activePhaseId) ?? state.phases[0];
   if (!activePhase) {
     return (
@@ -48,13 +63,27 @@ export default function App() {
       style={{ height: "100dvh" }}
     >
       <div key={screen} className="app-viewport">
-        {screen === "home" && <HomeScreen state={safeState} dispatch={dispatch} onGoPhases={() => setScreen("phases")} onToast={setToast} />}
+        {screen === "home" && (
+          <HomeScreen
+            state={safeState}
+            dispatch={dispatch}
+            onGoPhases={phaseId => (phaseId ? goToPhaseDetail(phaseId) : navigateTo("phases"))}
+            onToast={setToast}
+          />
+        )}
         {screen === "calendar" && <CalendarScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
         {screen === "stats" && <StatsScreen state={safeState} />}
-        {screen === "phases" && <PhaseScreen state={safeState} dispatch={dispatch} onGoHome={() => setScreen("home")} />}
+        {screen === "phases" && (
+          <PhaseScreen
+            state={safeState}
+            dispatch={dispatch}
+            onGoHome={() => navigateTo("home")}
+            initialDetailPhaseId={targetPhaseId}
+          />
+        )}
         {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
       </div>
-      <BottomNav screen={screen} onNavigate={setScreen} />
+      <BottomNav screen={screen} onNavigate={navigateTo} />
       {toast && <Toast message={toast} onDone={() => setToast(null)} />}
       {showSplash && <Splash onDone={() => setShowSplash(false)} />}
     </div>
