@@ -456,14 +456,15 @@ export function PhaseDetailScreen({
 }
 
 export function PhaseScreen({
-  state, dispatch, onGoHome,
+  state, dispatch, onGoHome, initialDetailPhaseId,
 }: {
   state: AppState;
   dispatch: React.Dispatch<Action>;
   onGoHome: () => void;
+  initialDetailPhaseId?: string | null;
 }) {
   const [showAdd, setShowAdd] = useState(false);
-  const [detailPhaseId, setDetailPhaseId] = useState<string | null>(null);
+  const [detailPhaseId, setDetailPhaseId] = useState<string | null>(initialDetailPhaseId ?? null);
 
   const activePhase = state.phases.find(p => p.id === state.activePhaseId)!;
   const otherPhases = state.phases.filter(p => p.id !== state.activePhaseId);
