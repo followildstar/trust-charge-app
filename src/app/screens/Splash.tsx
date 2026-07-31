@@ -3,7 +3,7 @@ import { APP_NAME, APP_TAGLINE } from "../lib/defaults";
 import { CircularGauge } from "./CircularGauge";
 
 // 하루 한 번만 스플래시를 보여주기 위한 저장 키
-const SPLASH_KEY = "trust-charge-splash-date";
+// const SPLASH_KEY = "trust-charge-splash-date";
 
 // 테스트 모드: true로 설정하면 매번 스플래시 표시
 const TEST_MODE = true;
