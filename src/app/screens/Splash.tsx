@@ -37,7 +37,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
     // 마운트 직후 바로 100을 주면 transition이 씹힐 수 있어 한 프레임 늦게 시작
     const startFrame = requestAnimationFrame(() => setPct(100));
     // 1.4초 표시(페이드인+유지) 후 페이드아웃 시작
-    const outTimer = setTimeout(() => setPhase("out"), 1400);
+    const outTimer = setTimeout(() => setPhase("out"), 3000);
     // 페이드아웃(0.4초) 끝나면 완전히 제거
     const doneTimer = setTimeout(onDone, 1800);
 
