@@ -46,9 +46,13 @@ export function HomeScreen({
   const canCheck = isDateInRange(today, activePhase.startDate, activePhase.endDate);
   // 오늘이 목표의 활동 요일(매일/평일/주말)에 해당하는지
   const isActiveDay = isActiveWeekday(parseISO(today), activePhase.days ?? "all");
-  // 기간 안이지만 활동 요일이 아닌 날 → 체크리스트 대신 안내 문구를 보여줌
-  const showInactiveMessage = canCheck && !isActiveDay;
-  const inactiveDayMsg = `이 목표는 ${PHASE_DAYS_LABEL[activePhase.days ?? "all"]}에만 활동해요`;
+  // 체크리스트 대신 안내 문구를 보여줘야 하는 상황:
+  // 1) 아직 실천 기간 전(예정) / 이미 종료(완료)
+  // 2) 기간 안이지만 오늘이 활동 요일이 아닐 때 (예: 주말 목표인데 오늘은 평일)
+  const showInactiveMessage = !canCheck || !isActiveDay;
+  const inactiveDayMsg = !canCheck
+    ? (phaseStatus === "upcoming" ? "아직 실천 기간 전이에요" : "실천 기간 외의 날짜예요")
+    : `이 목표는 ${PHASE_DAYS_LABEL[activePhase.days ?? "all"]}에만 활동해요`;
   const phaseDaysShort = PHASE_DAYS_LABEL[activePhase.days ?? "all"].split(" ")[0];
 
   const sortedPhasesForSwitch = [...state.phases].sort((a, b) => a.startDate.localeCompare(b.startDate));
