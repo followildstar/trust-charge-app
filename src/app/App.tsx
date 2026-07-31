@@ -1,9 +1,7 @@
 import { useReducer, useState, useEffect } from "react";
-import { format } from "date-fns";
 import type { AppState, Screen } from "./types";
 import { appReducer } from "./lib/reducer";
 import { loadState, STORAGE_KEY } from "./lib/storage";
-import { isDateInRange } from "./lib/calc";
 import { BottomNav } from "./components/BottomNav";
 import { Toast } from "./components/Toast";
 import { Splash, shouldShowSplash } from "./components/Splash";
@@ -12,16 +10,10 @@ import { CalendarScreen } from "./screens/CalendarScreen";
 import { StatsScreen } from "./screens/StatsScreen";
 import { PhaseScreen } from "./screens/PhaseScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
-// 오늘이 활성 목표 기간에 포함되면 home, 아니면 calendar 로 시작
-function getInitialScreen(state: AppState): Screen {
-  const active = state.phases.find(p => p.id === state.activePhaseId) ?? state.phases[0];
-  if (!active) return "home";
-  const today = format(new Date(), "yyyy-MM-dd");
-  return isDateInRange(today, active.startDate, active.endDate) ? "home" : "calendar";
-}
 export default function App() {
   const [state, dispatch] = useReducer(appReducer, undefined, loadState);
-  const [screen, setScreen] = useState<Screen>(() => getInitialScreen(loadState()));
+  // 첫 진입 화면은 항상 홈
+  const [screen, setScreen] = useState<Screen>("home");
   const [toast, setToast] = useState<string | null>(null);
   const [showSplash, setShowSplash] = useState(() => shouldShowSplash());
   // 홈 화면의 "목표 수정" 메뉴에서 특정 목표의 상세(편집) 화면으로 바로 이동할 때 사용
