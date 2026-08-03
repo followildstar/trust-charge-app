@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import splashImage from "../assets/splash.png"; // 이미지 경로에 맞게 수정
+import splashImage from "../assets/splash.jpg"; // 이미지 경로에 맞게 수정
 
 // 하루 한 번만 스플래시를 보여주기 위한 저장 키
 const SPLASH_KEY = "trust-charge-splash-date";
