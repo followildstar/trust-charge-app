@@ -15,7 +15,7 @@ export default function App() {
   // 첫 진입 화면은 항상 홈
   const [screen, setScreen] = useState<Screen>("home");
   const [toast, setToast] = useState<string | null>(null);
-  const [showSplash, setShowSplash] = useState(() => shouldShowSplash());
+ const [showSplash, setShowSplash] = useState(() => TEST_MODE || shouldShowSplash());
   // 홈 화면의 "목표 수정" 메뉴에서 특정 목표의 상세(편집) 화면으로 바로 이동할 때 사용
   const [targetPhaseId, setTargetPhaseId] = useState<string | null>(null);
   useEffect(() => {
