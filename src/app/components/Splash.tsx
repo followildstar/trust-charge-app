@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { APP_NAME, APP_TAGLINE } from "../lib/defaults";
-import splashImage from "../assets/splash.jpg"; 
+import { Image } from 'react-native';
+// import splashImage from "../assets/splash.jpg"; 
 
 // 하루 한 번만 스플래시를 보여주기 위한 저장 키
 const SPLASH_KEY = "trust-charge-splash-date";
@@ -48,6 +49,12 @@ export function Splash({ onDone }: { onDone: () => void }) {
       <div className="splash-inner">
         <div className="splash-name">안녕?</div>
         <div className="splash-tagline">{APP_TAGLINE}</div>
+         <Image
+      source={require('../assets/splash.jpg')}
+      style={{
+        width: 120
+      }}
+    />
       </div>
     </div>
   );
