@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { APP_NAME, APP_TAGLINE } from "../lib/defaults";
+import splashImage from "../assets/splash.png"; // 이미지 경로에 맞게 수정
 
 // 하루 한 번만 스플래시를 보여주기 위한 저장 키
 const SPLASH_KEY = "trust-charge-splash-date";
@@ -9,7 +9,7 @@ const TEST_MODE = true;
 
 // 오늘 이미 스플래시를 봤는지
 export function shouldShowSplash(): boolean {
-  if (TEST_MODE) return true; // 항상 표시
+  if (TEST_MODE) return true;
   
   try {
     const today = new Date().toDateString();
@@ -26,14 +26,11 @@ function markSplashSeen() {
 }
 
 export function Splash({ onDone }: { onDone: () => void }) {
-  // in → hold → out 단계
   const [phase, setPhase] = useState<"in" | "out">("in");
 
   useEffect(() => {
     markSplashSeen();
-    // 1.4초 표시(페이드인+유지) 후 페이드아웃 시작
     const outTimer = setTimeout(() => setPhase("out"), 1400);
-    // 페이드아웃(0.4초) 끝나면 완전히 제거
     const doneTimer = setTimeout(onDone, 1800);
 
     return () => {
@@ -45,8 +42,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
   return (
     <div className={`splash${phase === "out" ? " is-out" : ""}`}>
       <div className="splash-inner">
-        <div className="splash-name">{APP_NAME}</div>
-        <div className="splash-tagline">{APP_TAGLINE}</div>
+        <img src={splashImage} alt="splash" className="splash-image" />
       </div>
     </div>
   );
