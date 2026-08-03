@@ -45,7 +45,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
   return (
     <div className={`splash${phase === "out" ? " is-out" : ""}`}>
       <div className="splash-inner">
-        <div className="splash-name">ㅇㅇㅇㅇ</div>
+        <div className="splash-name">ㅎㅎ</div>
         <div className="splash-tagline">{APP_TAGLINE}</div>
       </div>
     </div>
