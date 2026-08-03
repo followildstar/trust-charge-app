@@ -10,13 +10,16 @@ import { CalendarScreen } from "./screens/CalendarScreen";
 import { StatsScreen } from "./screens/StatsScreen";
 import { PhaseScreen } from "./screens/PhaseScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
+
+// 테스트 모드
+const TEST_MODE = true;
+
 export default function App() {
   const [state, dispatch] = useReducer(appReducer, undefined, loadState);
-  // 첫 진입 화면은 항상 홈
   const [screen, setScreen] = useState<Screen>("home");
   const [toast, setToast] = useState<string | null>(null);
- const [showSplash, setShowSplash] = useState(() => TEST_MODE || shouldShowSplash());
-  // 홈 화면의 "목표 수정" 메뉴에서 특정 목표의 상세(편집) 화면으로 바로 이동할 때 사용
+  // TEST_MODE 또는 shouldShowSplash() 결과에 따라
+  const [showSplash, setShowSplash] = useState(() => TEST_MODE || shouldShowSplash());
   const [targetPhaseId, setTargetPhaseId] = useState<string | null>(null);
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
