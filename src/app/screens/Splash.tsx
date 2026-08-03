@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { APP_NAME, APP_TAGLINE } from "../lib/defaults";
-import { CircularGauge } from "./CircularGauge";
+import splashImage from "../assets/splash.png"; // 이미지 경로에 맞게 수정
 
 // 하루 한 번만 스플래시를 보여주기 위한 저장 키
-// const SPLASH_KEY = "trust-charge-splash-date";
+const SPLASH_KEY = "trust-charge-splash-date";
 
 // 테스트 모드: true로 설정하면 매번 스플래시 표시
 const TEST_MODE = true;
 
 // 오늘 이미 스플래시를 봤는지
 export function shouldShowSplash(): boolean {
-  if (TEST_MODE) return true; // 항상 표시
-
+  if (TEST_MODE) return true;
+  
   try {
     const today = new Date().toDateString();
     return localStorage.getItem(SPLASH_KEY) !== today;
@@ -27,22 +26,14 @@ function markSplashSeen() {
 }
 
 export function Splash({ onDone }: { onDone: () => void }) {
-  // in → hold → out 단계
   const [phase, setPhase] = useState<"in" | "out">("in");
-  // 홈 화면과 같은 CircularGauge를 재사용 — 0 → 100 으로 차오르는 모션
-  const [pct, setPct] = useState(0);
 
   useEffect(() => {
     markSplashSeen();
-    // 마운트 직후 바로 100을 주면 transition이 씹힐 수 있어 한 프레임 늦게 시작
-    const startFrame = requestAnimationFrame(() => setPct(100));
-    // 1.4초 표시(페이드인+유지) 후 페이드아웃 시작
-    const outTimer = setTimeout(() => setPhase("out"), 3000);
-    // 페이드아웃(0.4초) 끝나면 완전히 제거
+    const outTimer = setTimeout(() => setPhase("out"), 1400);
     const doneTimer = setTimeout(onDone, 1800);
 
     return () => {
-      cancelAnimationFrame(startFrame);
       clearTimeout(outTimer);
       clearTimeout(doneTimer);
     };
@@ -51,9 +42,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
   return (
     <div className={`splash${phase === "out" ? " is-out" : ""}`}>
       <div className="splash-inner">
-        <CircularGauge pct={pct} size={150} />
-        <div className="splash-name">{APP_NAME}</div>
-        <div className="splash-tagline">{APP_TAGLINE}</div>
+        <img src={splashImage} alt="splash" className="splash-image" />
       </div>
     </div>
   );
