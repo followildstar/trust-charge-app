@@ -25,12 +25,41 @@ function markSplashSeen() {
   } catch {}
 }
 
+// export function Splash({ onDone }: { onDone: () => void }) {
+//   const [phase, setPhase] = useState<"in" | "out">("in");
+
+//   useEffect(() => {
+//     markSplashSeen();
+//     const outTimer = setTimeout(() => setPhase("out"), 1400);
+//     const doneTimer = setTimeout(onDone, 1800);
+
+//     return () => {
+//       clearTimeout(outTimer);
+//       clearTimeout(doneTimer);
+//     };
+//   }, [onDone]);
+
+//   return (
+//     <div className={`splash${phase === "out" ? " is-out" : ""}`}>
+//       <div className="splash-inner">
+//         <img src={splashImage} alt="splash" className="splash-image" />
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
 export function Splash({ onDone }: { onDone: () => void }) {
+  // in → hold → out 단계
   const [phase, setPhase] = useState<"in" | "out">("in");
 
   useEffect(() => {
     markSplashSeen();
+    // 1.4초 표시(페이드인+유지) 후 페이드아웃 시작
     const outTimer = setTimeout(() => setPhase("out"), 1400);
+    // 페이드아웃(0.4초) 끝나면 완전히 제거
     const doneTimer = setTimeout(onDone, 1800);
 
     return () => {
@@ -42,8 +71,10 @@ export function Splash({ onDone }: { onDone: () => void }) {
   return (
     <div className={`splash${phase === "out" ? " is-out" : ""}`}>
       <div className="splash-inner">
-        <img src={splashImage} alt="splash" className="splash-image" />
+        <div className="splash-name">안녕?</div>
+        <div className="splash-tagline">{APP_TAGLINE}</div>
       </div>
     </div>
   );
 }
+
