@@ -3139,3 +3139,8 @@ span.info-label {
     font-size: 13px;
     color: #444;
 }
+.splash-image {
+  max-width: 200px;
+  height: auto;
+  object-fit: contain;
+}
