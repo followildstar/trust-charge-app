@@ -81,4 +81,4 @@ export const DEFAULT_STATE: AppState = {
 
 export const APP_NAME = "Trust Charge";
 export const APP_VERSION = "2.0";
-export const APP_TAGLINE = "매일의 실천으로 채우는 자기 신뢰";
+export const APP_TAGLINE = "The Daily Practice of Self-Trust";
