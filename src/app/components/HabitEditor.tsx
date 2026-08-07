@@ -4,13 +4,22 @@ import { makeId } from "../lib/calc";
 import { NumberInput } from "./NumberInput";
 import type { Habit, HabitOption } from "../types";
 
-export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>; onSave: (h: Habit) => void; onClose: () => void; }) {
+export function HabitEditor({
+  habit, isFlagged, onSave, onClose,
+}: {
+  habit: Partial<Habit>;
+  isFlagged?: boolean;
+  onSave: (h: Habit, isFlagged: boolean) => void;
+  onClose: () => void;
+}) {
   const [name, setName] = useState(habit?.name ?? "");
   const [score, setScore] = useState(habit?.score ?? 5);
   const [isBonus, setIsBonus] = useState(habit?.isBonus ?? false);
   const [options, setOptions] = useState<HabitOption[]>(habit?.options ?? []);
   const [optLabel, setOptLabel] = useState("");
   const [optScore, setOptScore] = useState(5);
+  // 이 항목을 캘린더에 빨간 점으로 표시할지 (목표당 1개만 가능)
+  const [flagged, setFlagged] = useState(isFlagged ?? false);
 
   function addOption() {
     if (!optLabel.trim()) return;
@@ -27,7 +36,10 @@ export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>;
 
   function handleSave() {
     if (!name.trim()) return;
-    onSave({ id: habit?.id ?? makeId(), name: name.trim(), score, isBonus, enabled: habit?.enabled ?? true, order: habit?.order ?? 0, options });
+    onSave(
+      { id: habit?.id ?? makeId(), name: name.trim(), score, isBonus, enabled: habit?.enabled ?? true, order: habit?.order ?? 0, options },
+      flagged,
+    );
   }
 
   return (
@@ -52,6 +64,13 @@ export function HabitEditor({ habit, onSave, onClose }: { habit: Partial<Habit>;
             <span className="field-label-fg-plain">보너스 항목</span>
             <button onClick={() => setIsBonus(!isBonus)} className={`toggle${isBonus ? " is-on" : ""}`}>
               <div className={`toggle-thumb${isBonus ? " is-on" : ""}`} />
+            </button>
+          </div>
+
+          <div className="row-between-py1">
+            <span className="field-label-fg-plain">캘린더에 빨간 점으로 표시</span>
+            <button onClick={() => setFlagged(v => !v)} className={`toggle${flagged ? " is-on" : ""}`}>
+              <div className={`toggle-thumb${flagged ? " is-on" : ""}`} />
             </button>
           </div>
 
