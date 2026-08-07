@@ -1686,6 +1686,25 @@ span.legend-label.today {
   border-color: rgba(221, 221, 221, 0.8);
 }
 
+.legend-dot-flag {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--destructive);
+}
+
+/* 캘린더 셀 상단의 "지정 항목 달성" 빨간 점 (평소엔 투명해서 자리만 차지, 행 높이가 흔들리지 않음) */
+.cal-day-flag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  margin-bottom: 3px;
+  background-color: transparent;
+}
+.cal-day-flag-dot.is-visible {
+  background-color: var(--destructive);
+}
+
 .cal-detail-card {
   padding: 1rem 0;
 }
@@ -3169,4 +3188,3 @@ background-color: var(--point03);
   font-size: 14px;
   color: #333;
 }
-
