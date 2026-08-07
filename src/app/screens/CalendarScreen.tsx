@@ -98,6 +98,8 @@ export function CalendarScreen({ state, dispatch, onToast }: { state: AppState; 
             const dayStatus = getDayStatus(activePhase, ds);
             const isTodayDate = ds === today;
             const isSelected = ds === selectedDate;
+            // 지정된 "빨간 점 표시" 항목이 이 날짜에 체크됐는지
+            const isFlagged = !!activePhase.flagHabitId && !!activePhase.records[ds]?.[activePhase.flagHabitId]?.checked;
             let bg = "transparent";
             let textClass = "day-out";
             if (inRange) {
@@ -112,6 +114,7 @@ export function CalendarScreen({ state, dispatch, onToast }: { state: AppState; 
                 aria-disabled={isInactiveDay}
                 className={`cal-day${isSelected ? " is-selected" : ""}${isInactiveDay ? " is-inactive" : ""}`}
               >
+                <span className={`cal-day-flag-dot${isFlagged ? " is-visible" : ""}`} />
                 <div className={`cal-day-circle${isTodayDate ? " is-today" : ""}`} style={{ background: bg }}>
                   <span className={`cal-day-num${isTodayDate ? " is-today" : ""} ${dayStatus.isFullDay ? "on-primary" : textClass}`}>
                     {format(d, "d")}
@@ -134,6 +137,14 @@ export function CalendarScreen({ state, dispatch, onToast }: { state: AppState; 
             <div className="legend-dot-partial" />
             <span className="legend-label">부분</span>
           </div>
+          {activePhase.flagHabitId && (
+            <div className="legend-item">
+              <div className="legend-dot-flag" />
+              <span className="legend-label">
+                {activePhase.habits.find(h => h.id === activePhase.flagHabitId)?.name ?? "표시 항목"}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="cal-detail-card">
