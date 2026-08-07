@@ -80,6 +80,8 @@ export function appReducer(state: AppState, action: Action): AppState {
       return updateTargetPhase(state, action.phaseId, phase => ({
         ...phase,
         habits: phase.habits.filter(h => h.id !== action.habitId),
+        // 삭제되는 항목이 캘린더 표시용으로 지정돼 있었다면 함께 해제
+        flagHabitId: phase.flagHabitId === action.habitId ? undefined : phase.flagHabitId,
       }));
 
     case "REORDER_HABITS":
@@ -130,6 +132,12 @@ export function appReducer(state: AppState, action: Action): AppState {
         ...phase, retrospective: action.retrospective,
       }));
 
+    case "SET_FLAG_HABIT":
+      // habitId가 null이면 해제. 값이 있으면 그 항목 하나로 교체(자동으로 기존 지정은 사라짐 = 목표당 최대 1개 보장)
+      return updatePhase(state, action.phaseId, phase => ({
+        ...phase, flagHabitId: action.habitId ?? undefined,
+      }));
+
     case "RESET_DATA":
       return DEFAULT_STATE;
 
@@ -141,6 +149,7 @@ export function appReducer(state: AppState, action: Action): AppState {
         links: p.links ?? [],
         retrospective: p.retrospective ?? EMPTY_RETRO,
         days: p.days ?? "all",
+        flagHabitId: p.flagHabitId,
         habits: (p.habits ?? []).map(h => ({
           ...h,
           options: (h.options ?? []).map(o => ({
