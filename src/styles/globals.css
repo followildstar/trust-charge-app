@@ -2314,7 +2314,7 @@ span.legend-label.today {
     bottom: 1.5rem;
     left: 50%;
     transform: translate(-50%);
-    z-index: 999999;
+    z-index: 999;
     align-items: centr;
     justify-content: center;
     display: flex;
