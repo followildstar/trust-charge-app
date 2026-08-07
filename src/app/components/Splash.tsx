@@ -30,7 +30,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     markSplashSeen();
-    const outTimer = setTimeout(() => setPhase("out"), 1800);
+    const outTimer = setTimeout(() => setPhase("out"), 1200);
     const doneTimer = setTimeout(onDone, 1800);
 
     return () => {
