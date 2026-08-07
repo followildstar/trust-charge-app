@@ -398,12 +398,19 @@ export function PhaseDetailScreen({
       {editHabit !== null && (
         <HabitEditor
           habit={editHabit}
+          isFlagged={!!editHabit.id && phase.flagHabitId === editHabit.id}
           onClose={() => setEditHabit(null)}
-          onSave={h => {
+          onSave={(h, isFlagged) => {
             if (h.id && phase.habits.some(ah => ah.id === h.id)) {
               dispatch({ type: "UPDATE_HABIT", phaseId: phase.id, habit: h });
             } else {
               dispatch({ type: "ADD_HABIT", phaseId: phase.id, habit: h });
+            }
+            // 캘린더 빨간 점 표시 항목은 목표당 1개만: 켜면 이 항목으로 교체, 끄면 이 항목이었을 때만 해제
+            if (isFlagged) {
+              dispatch({ type: "SET_FLAG_HABIT", phaseId: phase.id, habitId: h.id });
+            } else if (phase.flagHabitId === h.id) {
+              dispatch({ type: "SET_FLAG_HABIT", phaseId: phase.id, habitId: null });
             }
             setEditHabit(null);
           }}
