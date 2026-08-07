@@ -21,6 +21,7 @@ export default function App() {
   // TEST_MODE 또는 shouldShowSplash() 결과에 따라
   const [showSplash, setShowSplash] = useState(() => TEST_MODE || shouldShowSplash());
   const [targetPhaseId, setTargetPhaseId] = useState<string | null>(null);
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [state]);
@@ -38,6 +39,7 @@ export default function App() {
   }
 
   const activePhase = state.phases.find(p => p.id === state.activePhaseId) ?? state.phases[0];
+
   if (!activePhase) {
     return (
       <div className="app-empty">
@@ -51,36 +53,42 @@ export default function App() {
       </div>
     );
   }
+
   const safeState: AppState = { ...state, activePhaseId: activePhase.id };
+
   return (
-    <div
-      className="app-shell"
-      style={{ height: "100dvh" }}
-    >
-      <div key={screen} className="app-viewport">
-        {screen === "home" && (
-          <HomeScreen
-            state={safeState}
-            dispatch={dispatch}
-            onGoPhases={phaseId => (phaseId ? goToPhaseDetail(phaseId) : navigateTo("phases"))}
-            onToast={setToast}
-          />
-        )}
-        {screen === "calendar" && <CalendarScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
-        {screen === "stats" && <StatsScreen state={safeState} />}
-        {screen === "phases" && (
-          <PhaseScreen
-            state={safeState}
-            dispatch={dispatch}
-            onGoHome={() => navigateTo("home")}
-            initialDetailPhaseId={targetPhaseId}
-          />
-        )}
-        {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
-      </div>
-      <BottomNav screen={screen} onNavigate={navigateTo} />
-      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
+    <div className="app-shell" style={{ height: "100dvh" }}>
+      {/* 스플래시만 보임 */}
       {showSplash && <Splash onDone={() => setShowSplash(false)} />}
+
+      {/* 스플래시가 끝나면 앱 콘텐츠 표시 */}
+      {!showSplash && (
+        <>
+          <div key={screen} className="app-viewport">
+            {screen === "home" && (
+              <HomeScreen
+                state={safeState}
+                dispatch={dispatch}
+                onGoPhases={phaseId => (phaseId ? goToPhaseDetail(phaseId) : navigateTo("phases"))}
+                onToast={setToast}
+              />
+            )}
+            {screen === "calendar" && <CalendarScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
+            {screen === "stats" && <StatsScreen state={safeState} />}
+            {screen === "phases" && (
+              <PhaseScreen
+                state={safeState}
+                dispatch={dispatch}
+                onGoHome={() => navigateTo("home")}
+                initialDetailPhaseId={targetPhaseId}
+              />
+            )}
+            {screen === "settings" && <SettingsScreen state={safeState} dispatch={dispatch} onToast={setToast} />}
+          </div>
+          <BottomNav screen={screen} onNavigate={navigateTo} />
+          {toast && <Toast message={toast} onDone={() => setToast(null)} />}
+        </>
+      )}
     </div>
   );
 }
