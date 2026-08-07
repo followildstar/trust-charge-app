@@ -24,6 +24,8 @@ export interface Phase {
   days: PhaseDays;
   links: QuickLink[];
   retrospective: Retrospective;
+  // 캘린더에 빨간 점으로 표시할 항목의 id. 목표당 최대 1개만 설정 가능
+  flagHabitId?: string;
 }
 
 export interface AppState {
@@ -52,5 +54,7 @@ export type Action =
   | { type: "UPDATE_LINK"; phaseId: string; link: QuickLink }
   | { type: "DELETE_LINK"; phaseId: string; linkId: string }
   | { type: "SET_RETROSPECTIVE"; phaseId: string; retrospective: Retrospective }
+  // 캘린더 빨간 점 표시용 항목 지정/해제. habitId가 null이면 해제
+  | { type: "SET_FLAG_HABIT"; phaseId: string; habitId: string | null }
   | { type: "RESET_DATA" }
   | { type: "IMPORT_DATA"; state: AppState };
